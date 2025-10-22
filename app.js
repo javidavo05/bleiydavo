@@ -257,17 +257,21 @@ async function createMonthCard(monthData, now) {
                 </div>
             ` : `
                 <div class="locked-adventure">
-                    <div class="photo-album locked">
-                        <div class="photo-slot">🔒</div>
-                        <div class="photo-slot">💕</div>
-                        <div class="photo-slot">🌹</div>
-                        <div class="photo-slot">✨</div>
-                        <div class="photo-slot">💫</div>
-                        <div class="photo-slot">🌟</div>
+                    <div class="locked-instructions">
+                        <div class="lock-icon">🔒</div>
+                        <h4 class="locked-title">Espera a este 23</h4>
+                        <p class="locked-message">para recibir la siguiente aventura</p>
                     </div>
-                    <div class="locked-message">
-                        <h4>Espera al próximo 23</h4>
-                        <p>para la siguiente aventura</p>
+                    <div class="locked-photos">
+                        <h5>📸 Fotos de recuerdo:</h5>
+                        <div class="photo-album locked">
+                            <div class="photo-slot">🔒</div>
+                            <div class="photo-slot">💕</div>
+                            <div class="photo-slot">🌹</div>
+                            <div class="photo-slot">✨</div>
+                            <div class="photo-slot">💫</div>
+                            <div class="photo-slot">🌟</div>
+                        </div>
                     </div>
                 </div>
             `}
