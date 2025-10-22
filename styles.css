@@ -661,6 +661,42 @@ body.custom-bg {
     font-size: 1.1rem;
 }
 
+.debug-info {
+    margin-top: 15px;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    white-space: pre-wrap;
+    max-height: 300px;
+    overflow-y: auto;
+    display: none;
+}
+
+.debug-info.show {
+    display: block;
+}
+
+.debug-info.success {
+    border-color: var(--success-color);
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--success-color);
+}
+
+.debug-info.error {
+    border-color: var(--error-color);
+    background: rgba(239, 68, 68, 0.1);
+    color: var(--error-color);
+}
+
+.debug-info.info {
+    border-color: var(--primary-color);
+    background: rgba(99, 102, 241, 0.1);
+    color: var(--primary-color);
+}
+
 .month-list {
     display: flex;
     flex-direction: column;

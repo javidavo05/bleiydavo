@@ -58,6 +58,9 @@ function init() {
     document.getElementById('loginBackgroundUpload').addEventListener('change', handleLoginBackgroundUpload);
     document.getElementById('removeLoginBackground').addEventListener('click', removeLoginBackground);
 
+    // Debug upload
+    document.getElementById('testUpload').addEventListener('click', testImageUpload);
+
     // Inicializar datos en Firestore si no existen
     initializeFirestoreData();
 }
@@ -477,6 +480,100 @@ async function removeLoginBackground() {
         console.error('Error eliminando fondo de login:', error);
         showMessage('Error al eliminar fondo de login', 'error');
     }
+}
+
+// Función de debug para probar subida de imágenes
+async function testImageUpload() {
+    const fileInput = document.getElementById('debugUpload');
+    const debugInfo = document.getElementById('debugInfo');
+    
+    if (!fileInput.files[0]) {
+        showDebugInfo('❌ No se seleccionó ningún archivo', 'error');
+        return;
+    }
+
+    const file = fileInput.files[0];
+    showDebugInfo('🧪 INICIANDO PRUEBA DE SUBIDA...\n', 'info');
+    
+    try {
+        // 1. Verificar autenticación
+        showDebugInfo('✅ Paso 1: Verificando autenticación...\n', 'info');
+        const user = auth.currentUser;
+        if (!user) {
+            showDebugInfo('❌ Error: Usuario no autenticado', 'error');
+            return;
+        }
+        showDebugInfo(`✅ Usuario autenticado: ${user.email}\n`, 'success');
+
+        // 2. Verificar permisos de Storage
+        showDebugInfo('✅ Paso 2: Verificando permisos de Storage...\n', 'info');
+        
+        // 3. Crear referencia de Storage
+        showDebugInfo('✅ Paso 3: Creando referencia de Storage...\n', 'info');
+        const timestamp = Date.now();
+        const fileName = `debug-test/${timestamp}_${file.name}`;
+        const storageRef = storage.ref().child(fileName);
+        showDebugInfo(`✅ Referencia creada: ${fileName}\n`, 'success');
+
+        // 4. Verificar tamaño de archivo
+        showDebugInfo('✅ Paso 4: Verificando archivo...\n', 'info');
+        showDebugInfo(`📁 Nombre: ${file.name}\n`, 'info');
+        showDebugInfo(`📏 Tamaño: ${(file.size / 1024 / 1024).toFixed(2)} MB\n`, 'info');
+        showDebugInfo(`📄 Tipo: ${file.type}\n`, 'info');
+
+        // 5. Intentar subir archivo
+        showDebugInfo('✅ Paso 5: Subiendo archivo...\n', 'info');
+        const uploadTask = storageRef.put(file);
+        
+        // Monitorear progreso
+        uploadTask.on('state_changed', 
+            (snapshot) => {
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                showDebugInfo(`📤 Progreso: ${progress.toFixed(1)}%\n`, 'info');
+            },
+            (error) => {
+                showDebugInfo(`❌ Error durante subida: ${error.code}\n`, 'error');
+                showDebugInfo(`❌ Mensaje: ${error.message}\n`, 'error');
+                showDebugInfo(`❌ Detalles: ${JSON.stringify(error, null, 2)}\n`, 'error');
+            },
+            async () => {
+                try {
+                    showDebugInfo('✅ Paso 6: Obteniendo URL de descarga...\n', 'info');
+                    const downloadUrl = await uploadTask.snapshot.ref.getDownloadURL();
+                    showDebugInfo(`✅ URL obtenida: ${downloadUrl}\n`, 'success');
+                    
+                    showDebugInfo('✅ Paso 7: Probando acceso a la URL...\n', 'info');
+                    const response = await fetch(downloadUrl);
+                    if (response.ok) {
+                        showDebugInfo('✅ ¡ARCHIVO SUBIDO EXITOSAMENTE!\n', 'success');
+                        showDebugInfo(`🔗 URL: ${downloadUrl}\n`, 'success');
+                        
+                        // Limpiar archivo de prueba
+                        showDebugInfo('🧹 Limpiando archivo de prueba...\n', 'info');
+                        await storageRef.delete();
+                        showDebugInfo('✅ Archivo de prueba eliminado\n', 'success');
+                    } else {
+                        showDebugInfo(`❌ Error accediendo a URL: ${response.status}\n`, 'error');
+                    }
+                } catch (urlError) {
+                    showDebugInfo(`❌ Error obteniendo URL: ${urlError.message}\n`, 'error');
+                }
+            }
+        );
+
+    } catch (error) {
+        showDebugInfo(`❌ ERROR GENERAL: ${error.code}\n`, 'error');
+        showDebugInfo(`❌ Mensaje: ${error.message}\n`, 'error');
+        showDebugInfo(`❌ Stack: ${error.stack}\n`, 'error');
+    }
+}
+
+// Función para mostrar información de debug
+function showDebugInfo(message, type = 'info') {
+    const debugInfo = document.getElementById('debugInfo');
+    debugInfo.textContent += message;
+    debugInfo.className = `debug-info show ${type}`;
+    debugInfo.scrollTop = debugInfo.scrollHeight;
 }
 
 async function loadMonthEditor(monthId) {

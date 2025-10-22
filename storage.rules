@@ -31,6 +31,15 @@ service firebase.storage {
       allow write, delete: if isAdmin();
     }
     
+    // Reglas para las imágenes de fondo de login
+    match /login-backgrounds/{allPaths=**} {
+      // Los usuarios autenticados pueden leer
+      allow read: if isAuthenticated();
+      
+      // Solo el admin puede escribir y eliminar
+      allow write, delete: if isAdmin();
+    }
+    
     // Denegar acceso a cualquier otra ubicación no especificada
     match /{allPaths=**} {
       allow read, write: if false;
