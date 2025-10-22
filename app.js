@@ -63,6 +63,34 @@ function init() {
 
     // Inicializar datos en Firestore si no existen
     initializeFirestoreData();
+    
+    // Inicializar animaciones de scroll
+    initScrollAnimations();
+}
+
+// Función para animaciones de scroll
+function initScrollAnimations() {
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate-in');
+            }
+        });
+    }, observerOptions);
+
+    // Observar todas las cards de meses
+    document.addEventListener('DOMContentLoaded', () => {
+        setTimeout(() => {
+            document.querySelectorAll('.month-card').forEach(card => {
+                observer.observe(card);
+            });
+        }, 100);
+    });
 }
 
 // Autenticación
@@ -201,34 +229,35 @@ async function createMonthCard(monthData, now) {
         <div class="month-content">
             ${isUnlocked ? `
                 <h4 class="month-title">${monthContent.title || 'Sin título'}</h4>
-                <div class="photo-grid">
+                <div class="photo-album">
                     ${monthContent.photos && monthContent.photos.length > 0 
                         ? monthContent.photos.map(photo => `
-                            <div class="photo-item">
+                            <div class="photo-slot">
                                 <img src="${photo}" alt="Foto">
                             </div>
                         `).join('')
                         : `
-                            <div class="placeholder-grid">
-                                <div class="placeholder">❓</div>
-                                <div class="placeholder">❓</div>
-                                <div class="placeholder">❓</div>
-                                <div class="placeholder">❓</div>
-                            </div>
+                            <div class="photo-slot">📸</div>
+                            <div class="photo-slot">📷</div>
+                            <div class="photo-slot">🖼️</div>
+                            <div class="photo-slot">✨</div>
+                            <div class="photo-slot">💫</div>
+                            <div class="photo-slot">🌟</div>
                         `
                     }
                 </div>
             ` : `
-                <div class="locked-content">
-                    <div class="lock-icon">💕</div>
-                    <h4 class="locked-title">Espera al próximo 23</h4>
-                    <p class="locked-message">para la siguiente aventura</p>
-                    <div class="romantic-gallery">
-                        <div class="romantic-placeholder">💖</div>
-                        <div class="romantic-placeholder">🌹</div>
-                        <div class="romantic-placeholder">✨</div>
-                        <div class="romantic-placeholder">💫</div>
-                    </div>
+                <div class="photo-album locked">
+                    <div class="photo-slot">🔒</div>
+                    <div class="photo-slot">💕</div>
+                    <div class="photo-slot">🌹</div>
+                    <div class="photo-slot">✨</div>
+                    <div class="photo-slot">💫</div>
+                    <div class="photo-slot">🌟</div>
+                </div>
+                <div class="locked-message">
+                    <h4>Espera al próximo 23</h4>
+                    <p>para la siguiente aventura</p>
                 </div>
             `}
         </div>
