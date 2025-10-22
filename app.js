@@ -629,24 +629,18 @@ async function loadLoginBackgroundSettings() {
         if (settingsDoc.exists) {
             const settings = settingsDoc.data();
             if (settings.loginBackgroundImage) {
-                // Aplicar como fondo único del body
-                document.body.style.backgroundImage = `url(${settings.loginBackgroundImage})`;
-                document.body.style.backgroundSize = 'cover';
-                document.body.style.backgroundPosition = 'center';
-                document.body.style.backgroundRepeat = 'no-repeat';
-                document.body.style.backgroundAttachment = 'fixed';
-                
-                // También aplicar al elemento loginBackground si existe
+                // Solo aplicar al elemento loginBackground (pantalla de login)
                 const loginBackground = document.getElementById('loginBackground');
                 if (loginBackground) {
                     loginBackground.style.backgroundImage = `url(${settings.loginBackgroundImage})`;
                     loginBackground.style.backgroundSize = 'cover';
                     loginBackground.style.backgroundPosition = 'center';
                     loginBackground.style.backgroundRepeat = 'no-repeat';
+                    loginBackground.style.backgroundAttachment = 'fixed';
                     loginBackground.style.display = 'block';
                 }
                 
-                console.log('✅ Foto personalizada de portada aplicada como fondo único:', settings.loginBackgroundImage);
+                console.log('✅ Foto personalizada aplicada solo a pantalla de login:', settings.loginBackgroundImage);
             }
         } else {
             console.log('ℹ️ No hay foto personalizada configurada');
@@ -678,12 +672,16 @@ async function handleLoginBackgroundUpload(e) {
             updatedAt: firebase.firestore.FieldValue.serverTimestamp()
         }, { merge: true });
 
-        // Aplicar inmediatamente como fondo único del body
-        document.body.style.backgroundImage = `url(${downloadUrl})`;
-        document.body.style.backgroundSize = 'cover';
-        document.body.style.backgroundPosition = 'center';
-        document.body.style.backgroundRepeat = 'no-repeat';
-        document.body.style.backgroundAttachment = 'fixed';
+        // Aplicar inmediatamente solo a la pantalla de login
+        const loginBackground = document.getElementById('loginBackground');
+        if (loginBackground) {
+            loginBackground.style.backgroundImage = `url(${downloadUrl})`;
+            loginBackground.style.backgroundSize = 'cover';
+            loginBackground.style.backgroundPosition = 'center';
+            loginBackground.style.backgroundRepeat = 'no-repeat';
+            loginBackground.style.backgroundAttachment = 'fixed';
+            loginBackground.style.display = 'block';
+        }
 
         showMessage('Foto de portada actualizada correctamente', 'success');
         
@@ -701,12 +699,15 @@ async function removeLoginBackground() {
             updatedAt: firebase.firestore.FieldValue.serverTimestamp()
         });
 
-        // Remover imagen del body
-        document.body.style.backgroundImage = '';
-        document.body.style.backgroundSize = '';
-        document.body.style.backgroundPosition = '';
-        document.body.style.backgroundRepeat = '';
-        document.body.style.backgroundAttachment = '';
+        // Remover imagen solo de la pantalla de login
+        const loginBackground = document.getElementById('loginBackground');
+        if (loginBackground) {
+            loginBackground.style.backgroundImage = '';
+            loginBackground.style.backgroundSize = '';
+            loginBackground.style.backgroundPosition = '';
+            loginBackground.style.backgroundRepeat = '';
+            loginBackground.style.backgroundAttachment = '';
+        }
         document.getElementById('loginBackgroundUpload').value = '';
 
         showMessage('Foto de portada eliminada', 'success');
