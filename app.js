@@ -629,8 +629,8 @@ async function loadLoginBackgroundSettings() {
         if (settingsDoc.exists) {
             const settings = settingsDoc.data();
             if (settings.loginBackgroundImage) {
-                // Solo aplicar al elemento loginBackground (pantalla de login)
-                const loginBackground = document.getElementById('loginBackground');
+                // Aplicar al elemento .login-background
+                const loginBackground = document.querySelector('.login-background');
                 if (loginBackground) {
                     loginBackground.style.backgroundImage = `url(${settings.loginBackgroundImage})`;
                     loginBackground.style.backgroundSize = 'cover';
@@ -640,7 +640,7 @@ async function loadLoginBackgroundSettings() {
                     loginBackground.style.display = 'block';
                 }
                 
-                console.log('✅ Foto personalizada aplicada solo a pantalla de login:', settings.loginBackgroundImage);
+                console.log('✅ Foto personalizada aplicada a .login-background:', settings.loginBackgroundImage);
             }
         } else {
             console.log('ℹ️ No hay foto personalizada configurada');
@@ -672,8 +672,8 @@ async function handleLoginBackgroundUpload(e) {
             updatedAt: firebase.firestore.FieldValue.serverTimestamp()
         }, { merge: true });
 
-        // Aplicar inmediatamente solo a la pantalla de login
-        const loginBackground = document.getElementById('loginBackground');
+        // Aplicar inmediatamente al elemento .login-background
+        const loginBackground = document.querySelector('.login-background');
         if (loginBackground) {
             loginBackground.style.backgroundImage = `url(${downloadUrl})`;
             loginBackground.style.backgroundSize = 'cover';
@@ -699,8 +699,8 @@ async function removeLoginBackground() {
             updatedAt: firebase.firestore.FieldValue.serverTimestamp()
         });
 
-        // Remover imagen solo de la pantalla de login
-        const loginBackground = document.getElementById('loginBackground');
+        // Remover imagen del elemento .login-background
+        const loginBackground = document.querySelector('.login-background');
         if (loginBackground) {
             loginBackground.style.backgroundImage = '';
             loginBackground.style.backgroundSize = '';
