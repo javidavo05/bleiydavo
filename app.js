@@ -76,6 +76,10 @@ function init() {
     
     // Event listeners para editor de textos
     document.getElementById('saveTextSettings').addEventListener('click', saveTextSettings);
+    
+    // Preview functionality
+    document.getElementById('previewMonthBtn').addEventListener('click', showMonthPreview);
+    document.getElementById('previewClose').addEventListener('click', closeMonthPreview);
 
     // Inicializar datos en Firestore si no existen
     initializeFirestoreData();
@@ -921,6 +925,99 @@ function updateNavigationButtons() {
         prevBtn.disabled = false;
         nextBtn.disabled = false;
     }
+}
+
+// Función para mostrar preview del mes
+function showMonthPreview() {
+    const modal = document.getElementById('previewModal');
+    const modalTitle = document.getElementById('previewModalTitle');
+    const previewPhotos = document.getElementById('previewPhotos');
+    
+    // Obtener datos del formulario
+    const monthId = document.getElementById('editMonthId').value;
+    const title = document.getElementById('editTitle').value;
+    const adventureTitle = document.getElementById('editAdventureTitle').value;
+    const clothingType = document.getElementById('editClothingType').value;
+    const location = document.getElementById('editLocation').value;
+    const pickupTime = document.getElementById('editPickupTime').value;
+    const observations = document.getElementById('editObservations').value;
+    
+    // Configurar título
+    modalTitle.textContent = `Preview: ${title}`;
+    
+    // Configurar campos de detalles
+    document.getElementById('previewAdventureTitle').textContent = adventureTitle || 'Aventura especial del mes';
+    document.getElementById('previewClothingType').textContent = clothingType || 'Vestimenta cómoda y elegante';
+    document.getElementById('previewLocation').textContent = location || 'Lugar especial por confirmar';
+    document.getElementById('previewPickupTime').textContent = pickupTime || 'Hora por confirmar';
+    document.getElementById('previewObservations').textContent = observations || 'Detalles especiales para esta aventura';
+    
+    // Configurar galería de fotos (usar fotos existentes si las hay)
+    previewPhotos.innerHTML = '';
+    const existingPhotos = Array.from(document.querySelectorAll('#photoPreview .photo-item img')).map(img => img.src);
+    
+    if (existingPhotos.length > 0) {
+        existingPhotos.forEach((photo, index) => {
+            const photoItem = document.createElement('div');
+            photoItem.className = 'photo-gallery-item';
+            photoItem.innerHTML = `<img src="${photo}" alt="Foto de recuerdo" onclick="openPhotoModal(${index}, ${JSON.stringify(existingPhotos).replace(/"/g, '&quot;')}, '${title}')">`;
+            previewPhotos.appendChild(photoItem);
+        });
+    } else {
+        // Mostrar placeholder si no hay fotos
+        const placeholderMessage = document.createElement('div');
+        placeholderMessage.className = 'placeholder-message';
+        placeholderMessage.innerHTML = `
+            <div class="placeholder-content">
+                <div class="placeholder-icon">💕</div>
+                <h4>Fotos de Recuerdo</h4>
+                <p>Las fotos de esta aventura aparecerán aquí cuando las subas</p>
+                <div class="placeholder-grid">
+                    <div class="placeholder-item">📸</div>
+                    <div class="placeholder-item">📷</div>
+                    <div class="placeholder-item">🖼️</div>
+                    <div class="placeholder-item">✨</div>
+                    <div class="placeholder-item">💫</div>
+                    <div class="placeholder-item">🌟</div>
+                </div>
+            </div>
+        `;
+        previewPhotos.appendChild(placeholderMessage);
+    }
+    
+    // Mostrar modal
+    modal.style.display = 'flex';
+    
+    // Limpiar event listeners anteriores
+    const closeBtn = document.getElementById('previewClose');
+    closeBtn.onclick = null;
+    modal.onclick = null;
+    
+    // Event listeners para cerrar modal
+    closeBtn.onclick = () => {
+        modal.style.display = 'none';
+    };
+    
+    modal.onclick = (e) => {
+        if (e.target === modal) {
+            modal.style.display = 'none';
+        }
+    };
+    
+    // Cerrar con ESC
+    const handleEsc = (e) => {
+        if (e.key === 'Escape' && modal.style.display === 'flex') {
+            modal.style.display = 'none';
+            document.removeEventListener('keydown', handleEsc);
+        }
+    };
+    document.addEventListener('keydown', handleEsc);
+}
+
+// Función para cerrar preview del mes
+function closeMonthPreview() {
+    const modal = document.getElementById('previewModal');
+    modal.style.display = 'none';
 }
 
 async function loadMonthEditor(monthId) {
