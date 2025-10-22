@@ -91,11 +91,22 @@ body.custom-bg {
 
 .login-card h1 {
     margin-bottom: 30px;
-    font-size: 2rem;
-    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    font-size: 3rem;
+    font-family: 'Great Vibes', 'Dancing Script', 'Parisienne', cursive;
+    font-weight: 400;
+    background: linear-gradient(135deg, #f472b6, #ec4899, #fbbf24);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transform: rotate(-1deg);
+    animation: romanticFloat 4s ease-in-out infinite;
+    letter-spacing: 2px;
+}
+
+@keyframes romanticFloat {
+    0%, 100% { transform: rotate(-1deg) translateY(0px); }
+    50% { transform: rotate(-1deg) translateY(-4px); }
 }
 
 .form-group {
