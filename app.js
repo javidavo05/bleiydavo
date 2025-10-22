@@ -229,10 +229,10 @@ async function createMonthCard(monthData, now) {
         <div class="month-content">
             ${isUnlocked ? `
                 <div class="adventure-section">
-                    <h4 class="adventure-title">${monthContent.title || 'Aventura por descubrir'}</h4>
+                    <h4 class="adventure-title">${monthContent.title || 'Aventura del mes'}</h4>
                     <div class="adventure-instructions">
                         <h5>📋 Instrucciones para la aventura:</h5>
-                        <p>${monthContent.instructions || 'Las instrucciones aparecerán aquí...'}</p>
+                        <p>${monthContent.instructions || 'Las instrucciones aparecerán aquí cuando el admin las configure...'}</p>
                     </div>
                 </div>
                 <div class="memories-section">
@@ -297,8 +297,12 @@ function showMonthModal(monthId, monthContent, monthName, year) {
     // Configurar título
     modalTitle.textContent = `${monthName} ${year}`;
     
-    // Configurar instrucciones
-    modalInstructions.textContent = monthContent.instructions || 'Las instrucciones aparecerán aquí...';
+    // Configurar instrucciones - solo mostrar si hay contenido real
+    if (monthContent.instructions && monthContent.instructions.trim() !== '') {
+        modalInstructions.textContent = monthContent.instructions;
+    } else {
+        modalInstructions.textContent = 'Las instrucciones aparecerán aquí cuando el admin las configure...';
+    }
     
     // Configurar galería de fotos
     modalPhotos.innerHTML = '';

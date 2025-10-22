@@ -931,33 +931,40 @@ body.custom-bg {
 }
 
 .modal-content {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(252, 231, 243, 0.9));
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.95), rgba(51, 65, 85, 0.9));
     border-radius: 25px;
     padding: 0;
     max-width: 90%;
     max-height: 90%;
     width: 800px;
-    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);
-    border: 2px solid rgba(251, 191, 36, 0.3);
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.7);
+    border: 2px solid rgba(251, 191, 36, 0.4);
     overflow: hidden;
     animation: slideInUp 0.4s ease-out;
+    backdrop-filter: blur(20px);
 }
 
 .modal-header {
-    background: linear-gradient(135deg, #f472b6, #ec4899, #fbbf24);
-    color: white;
-    padding: 20px 30px;
+    background: linear-gradient(135deg, #1e293b, #334155, #475569);
+    color: #fbbf24;
+    padding: 25px 30px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 2px solid rgba(251, 191, 36, 0.3);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 .modal-header h2 {
     margin: 0;
-    font-size: 1.8rem;
+    font-size: 2.2rem;
     font-family: 'Great Vibes', 'Dancing Script', cursive;
     font-weight: 600;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(135deg, #fbbf24, #f59e0b, #d97706);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .close {
@@ -983,39 +990,47 @@ body.custom-bg {
     padding: 30px;
     max-height: 70vh;
     overflow-y: auto;
+    background: linear-gradient(135deg, rgba(15, 23, 42, 0.8), rgba(30, 41, 59, 0.6));
 }
 
 .modal-instructions {
     margin-bottom: 30px;
     padding: 25px;
-    background: linear-gradient(135deg, rgba(252, 231, 243, 0.4), rgba(251, 191, 36, 0.1));
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(51, 65, 85, 0.6));
     border-radius: 15px;
-    border: 2px solid rgba(251, 191, 36, 0.3);
+    border: 2px solid rgba(251, 191, 36, 0.4);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
 }
 
 .modal-instructions h3 {
-    color: var(--romantic-gold);
-    font-size: 1.3rem;
+    color: #fbbf24;
+    font-size: 1.4rem;
     margin-bottom: 15px;
     font-weight: 600;
+    font-family: 'Great Vibes', 'Dancing Script', cursive;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .modal-instructions p {
-    color: var(--text-color);
+    color: #e2e8f0;
     line-height: 1.6;
     font-size: 1rem;
-    background: rgba(0, 0, 0, 0.1);
+    background: rgba(0, 0, 0, 0.3);
     padding: 15px;
     border-radius: 10px;
-    border-left: 4px solid var(--romantic-gold);
+    border-left: 4px solid #fbbf24;
+    font-weight: 400;
 }
 
 .modal-gallery h3 {
-    color: var(--romantic-gold);
-    font-size: 1.3rem;
+    color: #fbbf24;
+    font-size: 1.4rem;
     margin-bottom: 20px;
     font-weight: 600;
     text-align: center;
+    font-family: 'Great Vibes', 'Dancing Script', cursive;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .photo-gallery-grid {
@@ -1023,9 +1038,11 @@ body.custom-bg {
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 15px;
     padding: 20px;
-    background: rgba(255, 255, 255, 0.1);
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.6), rgba(51, 65, 85, 0.4));
     border-radius: 15px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(251, 191, 36, 0.3);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
 }
 
 .photo-gallery-item {
