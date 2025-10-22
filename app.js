@@ -54,6 +54,10 @@ function init() {
     document.getElementById('removeBackground').addEventListener('click', removeBackground);
     document.getElementById('useCustomBg').addEventListener('change', toggleCustomBackground);
 
+    // Login background settings
+    document.getElementById('loginBackgroundUpload').addEventListener('change', handleLoginBackgroundUpload);
+    document.getElementById('removeLoginBackground').addEventListener('click', removeLoginBackground);
+
     // Inicializar datos en Firestore si no existen
     initializeFirestoreData();
 }
@@ -288,6 +292,7 @@ function loadAdminPanel() {
 
     // Cargar configuración de fondo
     loadBackgroundSettings();
+    loadLoginBackgroundSettings();
 }
 
 // Mostrar sección del admin
@@ -404,6 +409,73 @@ async function toggleCustomBackground(e) {
     } catch (error) {
         console.error('Error actualizando configuración:', error);
         showMessage('Error al actualizar configuración', 'error');
+    }
+}
+
+// Cargar configuración de fondo de login
+async function loadLoginBackgroundSettings() {
+    try {
+        const settingsDoc = await db.collection('settings').doc('loginBackground').get();
+        if (settingsDoc.exists) {
+            const settings = settingsDoc.data();
+            if (settings.loginBackgroundImage) {
+                document.documentElement.style.setProperty('--login-bg-image', `url(${settings.loginBackgroundImage})`);
+            }
+        }
+    } catch (error) {
+        console.error('Error cargando configuración de fondo de login:', error);
+    }
+}
+
+// Manejar subida de imagen de fondo de login
+async function handleLoginBackgroundUpload(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    try {
+        showMessage('Subiendo imagen de fondo de login...', 'info');
+        
+        // Subir a Storage
+        const timestamp = Date.now();
+        const fileName = `login-backgrounds/${timestamp}_${file.name}`;
+        const storageRef = storage.ref().child(fileName);
+        
+        await storageRef.put(file);
+        const downloadUrl = await storageRef.getDownloadURL();
+
+        // Guardar en Firestore
+        await db.collection('settings').doc('loginBackground').set({
+            loginBackgroundImage: downloadUrl,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        }, { merge: true });
+
+        // Aplicar inmediatamente
+        document.documentElement.style.setProperty('--login-bg-image', `url(${downloadUrl})`);
+
+        showMessage('Imagen de fondo de login actualizada correctamente', 'success');
+        
+    } catch (error) {
+        console.error('Error subiendo imagen de fondo de login:', error);
+        showMessage('Error al subir imagen de fondo de login', 'error');
+    }
+}
+
+// Eliminar fondo de login
+async function removeLoginBackground() {
+    try {
+        await db.collection('settings').doc('loginBackground').update({
+            loginBackgroundImage: null,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        document.documentElement.style.removeProperty('--login-bg-image');
+        document.getElementById('loginBackgroundUpload').value = '';
+
+        showMessage('Fondo de login eliminado', 'success');
+        
+    } catch (error) {
+        console.error('Error eliminando fondo de login:', error);
+        showMessage('Error al eliminar fondo de login', 'error');
     }
 }
 

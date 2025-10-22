@@ -10,11 +10,9 @@
 <body>
     <!-- Pantalla de Login -->
     <div id="loginScreen" class="screen active">
+        <div class="login-background"></div>
         <div class="login-container">
             <div class="login-card">
-                <div class="login-image">
-                    <img src="assets/login-image.svg" alt="Imagen de bienvenida" id="loginImage" onerror="this.style.display='none'">
-                </div>
                 <h1>Bienvenido</h1>
                 <form id="loginForm">
                     <div class="form-group">
@@ -84,6 +82,13 @@
                     <div class="form-group">
                         <label>Usar Fondo Personalizado</label>
                         <input type="checkbox" id="useCustomBg">
+                    </div>
+                    
+                    <h3>Fondo de Login</h3>
+                    <div class="form-group">
+                        <label>Imagen de Fondo de Login</label>
+                        <input type="file" id="loginBackgroundUpload" accept="image/*">
+                        <button type="button" id="removeLoginBackground" class="btn-secondary">Eliminar Fondo de Login</button>
                     </div>
                 </div>
             </div>
