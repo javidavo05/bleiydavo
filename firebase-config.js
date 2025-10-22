@@ -27,7 +27,7 @@ const USERS = {
     'bvega': {
         email: 'bvega@bleiydavo.com',
         role: 'viewer',
-        displayName: 'Bvega'
+        displayName: 'Bleixen Vega'
     }
 };
 

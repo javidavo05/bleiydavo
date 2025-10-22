@@ -40,7 +40,11 @@ function init() {
     document.getElementById('logoutAdminBtn').addEventListener('click', logout);
 
     // Admin panel
-    document.getElementById('adminBtn').addEventListener('click', () => showScreen('adminScreen'));
+    document.getElementById('adminBtn').addEventListener('click', () => {
+        if (currentUserRole === 'admin') {
+            showScreen('adminScreen');
+        }
+    });
     document.getElementById('backToTimelineBtn').addEventListener('click', () => showScreen('timelineScreen'));
 
     // Modal
@@ -196,6 +200,9 @@ function handleAuthenticatedUser(user) {
     if (currentUserRole === 'admin') {
         document.getElementById('adminBtn').style.display = 'inline-block';
         loadAdminPanel();
+    } else {
+        // Ocultar botón de admin para usuarios viewer
+        document.getElementById('adminBtn').style.display = 'none';
     }
 
     showScreen('timelineScreen');
