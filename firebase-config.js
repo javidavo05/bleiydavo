@@ -31,9 +31,8 @@ const USERS = {
     }
 };
 
-// Meses de la timeline (Agosto 2025 - Agosto 2026)
+// Meses de la timeline (Septiembre 2025 - Septiembre 2026)
 const TIMELINE_MONTHS = [
-    { id: 'ago2025', month: 'Agosto', year: 2025, unlockDate: new Date(2025, 7, 23, 0, 0, 0) },
     { id: 'sep2025', month: 'Septiembre', year: 2025, unlockDate: new Date(2025, 8, 23, 0, 0, 0) },
     { id: 'oct2025', month: 'Octubre', year: 2025, unlockDate: new Date(2025, 9, 23, 0, 0, 0) },
     { id: 'nov2025', month: 'Noviembre', year: 2025, unlockDate: new Date(2025, 10, 23, 0, 0, 0) },
@@ -45,6 +44,7 @@ const TIMELINE_MONTHS = [
     { id: 'may2026', month: 'Mayo', year: 2026, unlockDate: new Date(2026, 4, 23, 0, 0, 0) },
     { id: 'jun2026', month: 'Junio', year: 2026, unlockDate: new Date(2026, 5, 23, 0, 0, 0) },
     { id: 'jul2026', month: 'Julio', year: 2026, unlockDate: new Date(2026, 6, 23, 0, 0, 0) },
-    { id: 'ago2026', month: 'Agosto', year: 2026, unlockDate: new Date(2026, 7, 23, 0, 0, 0) }
+    { id: 'ago2026', month: 'Agosto', year: 2026, unlockDate: new Date(2026, 7, 23, 0, 0, 0) },
+    { id: 'sep2026', month: 'Septiembre', year: 2026, unlockDate: new Date(2026, 8, 23, 0, 0, 0) }
 ];
 
