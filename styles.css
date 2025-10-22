@@ -672,6 +672,41 @@ body.custom-bg {
     font-size: 1.1rem;
 }
 
+.version-info {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(236, 72, 153, 0.2));
+    border: 2px solid rgba(99, 102, 241, 0.3);
+    border-radius: 15px;
+    padding: 15px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    backdrop-filter: blur(10px);
+}
+
+.version-badge {
+    background: linear-gradient(135deg, #f472b6, #ec4899);
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.version-text {
+    color: var(--text-color);
+    font-size: 0.9rem;
+    font-weight: 500;
+    flex: 1;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
 .debug-info {
     margin-top: 15px;
     padding: 15px;
