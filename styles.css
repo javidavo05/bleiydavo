@@ -745,9 +745,9 @@ body.custom-bg {
     font-size: 1.3rem;
     font-weight: 600;
     margin-bottom: 10px;
-    font-family: 'Great Vibes', 'Dancing Script', cursive;
+    font-family: 'Inter', 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
 }
 
 .detail-text {
@@ -958,9 +958,11 @@ body.custom-bg {
 .preview-title {
     color: #fbbf24;
     font-size: 1.8rem;
-    font-family: 'Great Vibes', 'Dancing Script', cursive;
+    font-family: 'Inter', 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 700;
     margin: 0;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    letter-spacing: 0.5px;
 }
 
 .preview-close {
@@ -1286,10 +1288,10 @@ body.custom-bg {
 .modal-header h2 {
     margin: 0;
     font-size: 2.2rem;
-    font-family: 'Great Vibes', 'Dancing Script', cursive;
-    font-weight: 600;
+    font-family: 'Inter', 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 700;
     text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
 }
 
 .close {
