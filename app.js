@@ -253,12 +253,17 @@ async function createMonthCard(monthData, now) {
                         ${monthContent.photos && monthContent.photos.length > 0 ? `
                             <div class="memories-section">
                                 <h5>📸 Fotos de recuerdo:</h5>
-                                <div class="photo-album">
-                                    ${monthContent.photos.map(photo => `
+                                <div class="photo-album preview" id="album-${monthData.id}">
+                                    ${monthContent.photos.slice(0, 3).map(photo => `
                                         <div class="photo-slot">
                                             <img src="${photo}" alt="Foto de recuerdo">
                                         </div>
                                     `).join('')}
+                                    ${monthContent.photos.length > 3 ? `
+                                        <button class="expand-gallery-btn" onclick="expandGallery('${monthData.id}', ${JSON.stringify(monthContent.photos).replace(/"/g, '&quot;')})">
+                                            +${monthContent.photos.length - 3} más
+                                        </button>
+                                    ` : ''}
                                 </div>
                             </div>
                         ` : ''}
@@ -777,6 +782,42 @@ async function saveTextSettings() {
     } catch (error) {
         console.error('Error guardando configuraciones de textos:', error);
         showMessage('Error al guardar textos: ' + error.message, 'error');
+    }
+}
+
+// Función para expandir la galería de fotos
+function expandGallery(monthId, allPhotos) {
+    const album = document.getElementById(`album-${monthId}`);
+    if (!album) return;
+    
+    // Si ya está expandido, contraer
+    if (album.classList.contains('expanded')) {
+        album.classList.remove('expanded');
+        album.classList.add('preview');
+        album.innerHTML = `
+            ${allPhotos.slice(0, 3).map(photo => `
+                <div class="photo-slot">
+                    <img src="${photo}" alt="Foto de recuerdo">
+                </div>
+            `).join('')}
+            <button class="expand-gallery-btn" onclick="expandGallery('${monthId}', ${JSON.stringify(allPhotos).replace(/"/g, '&quot;')})">
+                +${allPhotos.length - 3} más
+            </button>
+        `;
+    } else {
+        // Expandir mostrando todas las fotos
+        album.classList.remove('preview');
+        album.classList.add('expanded');
+        album.innerHTML = `
+            ${allPhotos.map(photo => `
+                <div class="photo-slot">
+                    <img src="${photo}" alt="Foto de recuerdo">
+                </div>
+            `).join('')}
+            <button class="expand-gallery-btn" onclick="expandGallery('${monthId}', ${JSON.stringify(allPhotos).replace(/"/g, '&quot;')})">
+                Ver menos
+            </button>
+        `;
     }
 }
 
