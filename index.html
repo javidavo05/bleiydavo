@@ -77,8 +77,8 @@
                 
                 <div id="settingsPanel" class="settings-panel" style="display: none;">
                     <div class="version-info">
-                        <span class="version-badge">v2.3</span>
-                        <span class="version-text">Última actualización: Contenido movido al modal + Preview Timeline</span>
+                        <span class="version-badge">v2.4</span>
+                        <span class="version-text">Última actualización: Fotos en cards + Editor de textos personalizable</span>
                     </div>
                     
                     <h3>Fondo Personalizado</h3>
@@ -112,6 +112,21 @@
                         <button type="button" id="previewTimeline" class="btn-secondary">👁️ Ver Timeline Normal</button>
                         <button type="button" id="previewLocked" class="btn-secondary">🔒 Ver Solo Bloqueados</button>
                         <button type="button" id="previewUnlocked" class="btn-secondary">✅ Ver Solo Desbloqueados</button>
+                    </div>
+                    
+                    <h3>📝 Editor de Textos</h3>
+                    <div class="form-group">
+                        <label>Texto para Cards Abiertos</label>
+                        <input type="text" id="openCardTitle" placeholder="Título para cards abiertos" value="Aventura Disponible">
+                        <input type="text" id="openCardMessage" placeholder="Mensaje para cards abiertos" value="Haz clic en 'Ver Detalles' para descubrir la aventura">
+                    </div>
+                    <div class="form-group">
+                        <label>Texto para Cards Cerrados</label>
+                        <input type="text" id="closedCardTitle" placeholder="Título para cards cerrados" value="Espera a este 23">
+                        <input type="text" id="closedCardMessage" placeholder="Mensaje para cards cerrados" value="para vivir la siguiente aventura">
+                    </div>
+                    <div class="form-group">
+                        <button type="button" id="saveTextSettings" class="btn-primary">💾 Guardar Textos</button>
                     </div>
                 </div>
             </div>

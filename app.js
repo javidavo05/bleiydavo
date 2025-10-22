@@ -2,6 +2,14 @@
 let currentUser = null;
 let currentUserRole = null;
 
+// Variables para textos personalizables
+let cardTexts = {
+    openTitle: 'Aventura Disponible',
+    openMessage: 'Haz clic en "Ver Detalles" para descubrir la aventura',
+    closedTitle: 'Espera a este 23',
+    closedMessage: 'para vivir la siguiente aventura'
+};
+
 // Elementos DOM
 const loginScreen = document.getElementById('loginScreen');
 const timelineScreen = document.getElementById('timelineScreen');
@@ -65,6 +73,9 @@ function init() {
     document.getElementById('previewTimeline').addEventListener('click', () => previewTimeline('normal'));
     document.getElementById('previewLocked').addEventListener('click', () => previewTimeline('locked'));
     document.getElementById('previewUnlocked').addEventListener('click', () => previewTimeline('unlocked'));
+    
+    // Event listeners para editor de textos
+    document.getElementById('saveTextSettings').addEventListener('click', saveTextSettings);
 
     // Inicializar datos en Firestore si no existen
     initializeFirestoreData();
@@ -236,15 +247,27 @@ async function createMonthCard(monthData, now) {
                     ${isUnlocked ? `
                         <div class="adventure-status">
                             <div class="status-icon">✅</div>
-                            <h4 class="status-title">Aventura Disponible</h4>
-                            <p class="status-message">Haz clic en "Ver Detalles" para descubrir la aventura</p>
+                            <h4 class="status-title">${cardTexts.openTitle}</h4>
+                            <p class="status-message">${cardTexts.openMessage}</p>
                         </div>
+                        ${monthContent.photos && monthContent.photos.length > 0 ? `
+                            <div class="memories-section">
+                                <h5>📸 Fotos de recuerdo:</h5>
+                                <div class="photo-album">
+                                    ${monthContent.photos.map(photo => `
+                                        <div class="photo-slot">
+                                            <img src="${photo}" alt="Foto de recuerdo">
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                        ` : ''}
                     ` : `
                         <div class="locked-adventure">
                             <div class="locked-instructions">
                                 <div class="lock-icon">🔒</div>
-                                <h4 class="locked-title">Espera a este 23</h4>
-                                <p class="locked-message">para vivir la siguiente aventura</p>
+                                <h4 class="locked-title">${cardTexts.closedTitle}</h4>
+                                <p class="locked-message">${cardTexts.closedMessage}</p>
                             </div>
                         </div>
                     `}
@@ -369,6 +392,7 @@ function loadAdminPanel() {
     // Cargar configuración de fondo
     loadBackgroundSettings();
     loadLoginBackgroundSettings();
+    loadTextSettings();
 }
 
 // Mostrar sección del admin
@@ -680,6 +704,60 @@ async function previewTimeline(mode) {
                    mode === 'unlocked' ? '✅ Mostrando solo meses desbloqueados' : 
                    '👁️ Mostrando timeline normal';
     showMessage(message, 'info');
+}
+
+// Función para cargar configuraciones de textos
+async function loadTextSettings() {
+    try {
+        const settingsDoc = await db.collection('settings').doc('cardTexts').get();
+        if (settingsDoc.exists) {
+            const settings = settingsDoc.data();
+            cardTexts = {
+                openTitle: settings.openTitle || 'Aventura Disponible',
+                openMessage: settings.openMessage || 'Haz clic en "Ver Detalles" para descubrir la aventura',
+                closedTitle: settings.closedTitle || 'Espera a este 23',
+                closedMessage: settings.closedMessage || 'para vivir la siguiente aventura'
+            };
+            
+            // Actualizar campos en el admin panel
+            document.getElementById('openCardTitle').value = cardTexts.openTitle;
+            document.getElementById('openCardMessage').value = cardTexts.openMessage;
+            document.getElementById('closedCardTitle').value = cardTexts.closedTitle;
+            document.getElementById('closedCardMessage').value = cardTexts.closedMessage;
+        }
+    } catch (error) {
+        console.error('Error cargando configuraciones de textos:', error);
+    }
+}
+
+// Función para guardar configuraciones de textos
+async function saveTextSettings() {
+    try {
+        const newTexts = {
+            openTitle: document.getElementById('openCardTitle').value,
+            openMessage: document.getElementById('openCardMessage').value,
+            closedTitle: document.getElementById('closedCardTitle').value,
+            closedMessage: document.getElementById('closedCardMessage').value
+        };
+        
+        await db.collection('settings').doc('cardTexts').set({
+            ...newTexts,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        }, { merge: true });
+        
+        // Actualizar variables globales
+        cardTexts = newTexts;
+        
+        showMessage('Textos guardados correctamente', 'success');
+        
+        // Recargar timeline para aplicar cambios
+        if (currentUserRole === 'admin') {
+            loadTimeline();
+        }
+    } catch (error) {
+        console.error('Error guardando configuraciones de textos:', error);
+        showMessage('Error al guardar textos', 'error');
+    }
 }
 
 async function loadMonthEditor(monthId) {
