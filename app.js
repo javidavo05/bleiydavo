@@ -292,18 +292,17 @@ async function createMonthCard(monthData, now) {
 function showMonthModal(monthId, monthContent, monthName, year) {
     const modal = document.getElementById('monthModal');
     const modalTitle = document.getElementById('modalTitle');
-    const modalInstructions = document.getElementById('modalInstructions');
     const modalPhotos = document.getElementById('modalPhotos');
     
     // Configurar título
     modalTitle.textContent = `${monthName} ${year}`;
     
-    // Configurar instrucciones - solo mostrar si hay contenido real
-    if (monthContent.instructions && monthContent.instructions.trim() !== '') {
-        modalInstructions.textContent = monthContent.instructions;
-    } else {
-        modalInstructions.textContent = 'Las instrucciones aparecerán aquí cuando el admin las configure...';
-    }
+    // Configurar campos de detalles
+    document.getElementById('modalAdventureTitle').textContent = monthContent.adventureTitle || 'Aventura especial del mes';
+    document.getElementById('modalClothingType').textContent = monthContent.clothingType || 'Vestimenta cómoda y elegante';
+    document.getElementById('modalLocation').textContent = monthContent.location || 'Lugar especial por confirmar';
+    document.getElementById('modalPickupTime').textContent = monthContent.pickupTime || 'Hora por confirmar';
+    document.getElementById('modalObservations').textContent = monthContent.observations || 'Detalles especiales para esta aventura';
     
     // Configurar galería de fotos
     modalPhotos.innerHTML = '';
@@ -929,6 +928,11 @@ async function loadMonthEditor(monthId) {
 
     document.getElementById('editMonthId').value = monthId;
     document.getElementById('editTitle').value = monthData.title || '';
+    document.getElementById('editAdventureTitle').value = monthData.adventureTitle || '';
+    document.getElementById('editClothingType').value = monthData.clothingType || '';
+    document.getElementById('editLocation').value = monthData.location || '';
+    document.getElementById('editPickupTime').value = monthData.pickupTime || '';
+    document.getElementById('editObservations').value = monthData.observations || '';
     document.getElementById('editInstructions').value = monthData.instructions || '';
 
     // Mostrar fotos existentes
@@ -1032,6 +1036,11 @@ async function saveMonthData(e) {
     
     const monthId = document.getElementById('editMonthId').value;
     const title = document.getElementById('editTitle').value;
+    const adventureTitle = document.getElementById('editAdventureTitle').value;
+    const clothingType = document.getElementById('editClothingType').value;
+    const location = document.getElementById('editLocation').value;
+    const pickupTime = document.getElementById('editPickupTime').value;
+    const observations = document.getElementById('editObservations').value;
     const instructions = document.getElementById('editInstructions').value;
 
     try {
@@ -1041,6 +1050,11 @@ async function saveMonthData(e) {
 
         await db.collection('months').doc(monthId).set({
             title: title,
+            adventureTitle: adventureTitle,
+            clothingType: clothingType,
+            location: location,
+            pickupTime: pickupTime,
+            observations: observations,
             instructions: instructions,
             photos: currentPhotos,
             updatedAt: firebase.firestore.FieldValue.serverTimestamp()

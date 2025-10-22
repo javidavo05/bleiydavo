@@ -77,8 +77,8 @@
                 
                 <div id="settingsPanel" class="settings-panel" style="display: none;">
                     <div class="version-info">
-                        <span class="version-badge">v2.9</span>
-                        <span class="version-text">Última actualización: Modal de ampliación de fotos con navegación</span>
+                        <span class="version-badge">v3.0</span>
+                        <span class="version-text">Última actualización: Modal Ver Detalles con timeline romántico</span>
                     </div>
                     
                     <h3>Fondo Personalizado</h3>
@@ -143,6 +143,31 @@
                         </div>
 
                         <div class="form-group">
+                            <label>Título de la Aventura</label>
+                            <input type="text" id="editAdventureTitle" placeholder="Título de la aventura">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Tipo de Ropa</label>
+                            <input type="text" id="editClothingType" placeholder="Tipo de ropa recomendada">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Lugar</label>
+                            <input type="text" id="editLocation" placeholder="Lugar de la aventura">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Hora de Recogida</label>
+                            <input type="text" id="editPickupTime" placeholder="Hora de recogida">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Observaciones</label>
+                            <textarea id="editObservations" rows="3" placeholder="Observaciones especiales"></textarea>
+                        </div>
+
+                        <div class="form-group">
                             <label>Instrucciones</label>
                             <textarea id="editInstructions" rows="6" placeholder="Escribe las instrucciones para este mes..." required></textarea>
                         </div>
@@ -188,16 +213,55 @@
     
     <!-- Modal de detalles del mes -->
     <div id="monthModal" class="modal">
-        <div class="modal-content">
+        <div class="modal-content detail-modal-content">
             <div class="modal-header">
                 <h2 id="modalTitle">Detalles del Mes</h2>
                 <span class="close">&times;</span>
             </div>
             <div class="modal-body">
-                <div class="modal-instructions">
-                    <h3>📋 Instrucciones para la aventura:</h3>
-                    <p id="modalInstructions">Las instrucciones aparecerán aquí...</p>
+                <!-- Timeline de detalles romántico -->
+                <div class="detail-timeline">
+                    <div class="detail-item">
+                        <div class="detail-icon">🎭</div>
+                        <div class="detail-content">
+                            <h3 class="detail-label">Título de Aventura</h3>
+                            <p id="modalAdventureTitle" class="detail-text">Aventura especial del mes</p>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <div class="detail-icon">👗</div>
+                        <div class="detail-content">
+                            <h3 class="detail-label">Tipo de Ropa</h3>
+                            <p id="modalClothingType" class="detail-text">Vestimenta cómoda y elegante</p>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <div class="detail-icon">📍</div>
+                        <div class="detail-content">
+                            <h3 class="detail-label">Lugar</h3>
+                            <p id="modalLocation" class="detail-text">Lugar especial por confirmar</p>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <div class="detail-icon">🕐</div>
+                        <div class="detail-content">
+                            <h3 class="detail-label">Hora de Recogida</h3>
+                            <p id="modalPickupTime" class="detail-text">Hora por confirmar</p>
+                        </div>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <div class="detail-icon">💝</div>
+                        <div class="detail-content">
+                            <h3 class="detail-label">Observaciones</h3>
+                            <p id="modalObservations" class="detail-text">Detalles especiales para esta aventura</p>
+                        </div>
+                    </div>
                 </div>
+                
                 <div class="modal-gallery">
                     <h3>📸 Fotos de recuerdo:</h3>
                     <div id="modalPhotos" class="photo-gallery-grid">
