@@ -352,7 +352,12 @@ function showMonthModal(monthId, monthContent, monthName, year) {
     }
     
     // Mostrar modal
+    console.log('🔍 Modal elemento:', modal);
+    console.log('🔍 Modal display antes:', modal.style.display);
     modal.classList.add('show');
+    modal.style.display = 'flex';
+    console.log('🔍 Modal display después:', modal.style.display);
+    console.log('🔍 Modal classes:', modal.className);
     
     // Función para cerrar modal
     const closeModal = () => {

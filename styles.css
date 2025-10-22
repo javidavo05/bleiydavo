@@ -1254,7 +1254,7 @@ body.custom-bg {
 }
 
 .modal.show {
-    display: flex;
+    display: flex !important;
     align-items: center;
     justify-content: center;
 }
