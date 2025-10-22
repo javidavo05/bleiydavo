@@ -261,7 +261,7 @@ async function createMonthCard(monthData, now) {
                     <div class="locked-instructions">
                         <div class="lock-icon">🔒</div>
                         <h4 class="locked-title">Espera a este 23</h4>
-                        <p class="locked-message">para recibir la siguiente aventura</p>
+                        <p class="locked-message">para vivir la siguiente aventura</p>
                     </div>
                     <div class="locked-photos">
                         <h5>📸 Fotos de recuerdo:</h5>
