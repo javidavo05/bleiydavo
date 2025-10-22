@@ -322,9 +322,15 @@ function showMonthModal(monthId, monthContent, monthName, year) {
     // Mostrar modal
     modal.classList.add('show');
     
-    // Event listeners para cerrar modal
+    // Limpiar event listeners anteriores
     const closeBtn = modal.querySelector('.close');
-    closeBtn.onclick = () => modal.classList.remove('show');
+    closeBtn.onclick = null;
+    modal.onclick = null;
+    
+    // Event listeners para cerrar modal
+    closeBtn.onclick = () => {
+        modal.classList.remove('show');
+    };
     
     modal.onclick = (e) => {
         if (e.target === modal) {
@@ -333,11 +339,13 @@ function showMonthModal(monthId, monthContent, monthName, year) {
     };
     
     // Cerrar con ESC
-    document.addEventListener('keydown', function(e) {
+    const handleEsc = (e) => {
         if (e.key === 'Escape' && modal.classList.contains('show')) {
             modal.classList.remove('show');
+            document.removeEventListener('keydown', handleEsc);
         }
-    });
+    };
+    document.addEventListener('keydown', handleEsc);
 }
 
 function showMonthDetails(monthId, monthContent) {
@@ -719,11 +727,16 @@ async function loadTextSettings() {
                 closedMessage: settings.closedMessage || 'para vivir la siguiente aventura'
             };
             
-            // Actualizar campos en el admin panel
-            document.getElementById('openCardTitle').value = cardTexts.openTitle;
-            document.getElementById('openCardMessage').value = cardTexts.openMessage;
-            document.getElementById('closedCardTitle').value = cardTexts.closedTitle;
-            document.getElementById('closedCardMessage').value = cardTexts.closedMessage;
+            // Actualizar campos en el admin panel si existen
+            const openTitleEl = document.getElementById('openCardTitle');
+            const openMessageEl = document.getElementById('openCardMessage');
+            const closedTitleEl = document.getElementById('closedCardTitle');
+            const closedMessageEl = document.getElementById('closedCardMessage');
+            
+            if (openTitleEl) openTitleEl.value = cardTexts.openTitle;
+            if (openMessageEl) openMessageEl.value = cardTexts.openMessage;
+            if (closedTitleEl) closedTitleEl.value = cardTexts.closedTitle;
+            if (closedMessageEl) closedMessageEl.value = cardTexts.closedMessage;
         }
     } catch (error) {
         console.error('Error cargando configuraciones de textos:', error);
@@ -739,6 +752,13 @@ async function saveTextSettings() {
             closedTitle: document.getElementById('closedCardTitle').value,
             closedMessage: document.getElementById('closedCardMessage').value
         };
+        
+        // Validar que no estén vacíos
+        if (!newTexts.openTitle.trim() || !newTexts.openMessage.trim() || 
+            !newTexts.closedTitle.trim() || !newTexts.closedMessage.trim()) {
+            showMessage('Todos los campos son obligatorios', 'error');
+            return;
+        }
         
         await db.collection('settings').doc('cardTexts').set({
             ...newTexts,
@@ -756,7 +776,7 @@ async function saveTextSettings() {
         }
     } catch (error) {
         console.error('Error guardando configuraciones de textos:', error);
-        showMessage('Error al guardar textos', 'error');
+        showMessage('Error al guardar textos: ' + error.message, 'error');
     }
 }
 
