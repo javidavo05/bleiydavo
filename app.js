@@ -207,8 +207,9 @@ async function loadTimeline() {
 }
 
 async function createMonthCard(monthData, now) {
-    const isUnlocked = now >= monthData.unlockDate || currentUserRole === 'admin';
+    const isUnlocked = now >= monthData.unlockDate;
     const isPast = now >= monthData.unlockDate;
+    const isAdmin = currentUserRole === 'admin';
     
     const card = document.createElement('div');
     card.className = `month-card ${isUnlocked ? 'unlocked' : 'locked'}`;
@@ -276,7 +277,7 @@ async function createMonthCard(monthData, now) {
                 </div>
             `}
         </div>
-        ${isUnlocked ? `<button class="btn-view" data-month-id="${monthData.id}">Ver Detalles</button>` : ''}
+        ${isUnlocked || isAdmin ? `<button class="btn-view" data-month-id="${monthData.id}">Ver Detalles</button>` : ''}
     `;
 
     // Agregar evento para ver detalles
