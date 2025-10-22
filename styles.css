@@ -102,6 +102,19 @@ body.custom-bg {
     transform: rotate(-1deg);
     animation: romanticFloat 4s ease-in-out infinite;
     letter-spacing: 2px;
+    opacity: 0;
+    animation: fadeInRomantic 1s ease-in-out 0.5s forwards;
+}
+
+@keyframes fadeInRomantic {
+    0% {
+        opacity: 0;
+        transform: rotate(-1deg) translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: rotate(-1deg) translateY(0px);
+    }
 }
 
 @keyframes romanticFloat {
