@@ -91,6 +91,9 @@ function init() {
     // Cargar textos personalizados
     loadTextSettings();
     
+    // Cargar foto personalizada de portada
+    loadLoginBackgroundSettings();
+    
     // Inicializar animaciones de scroll
     initScrollAnimations();
 }
@@ -213,6 +216,10 @@ function logout() {
     auth.signOut();
     currentUser = null;
     currentUserRole = null;
+    
+    // Mantener la foto personalizada de portada al cerrar sesión
+    loadLoginBackgroundSettings();
+    
     showScreen('loginScreen');
     loginForm.reset();
 }
@@ -626,11 +633,23 @@ async function loadLoginBackgroundSettings() {
         if (settingsDoc.exists) {
             const settings = settingsDoc.data();
             if (settings.loginBackgroundImage) {
+                const loginBackground = document.getElementById('loginBackground');
+                if (loginBackground) {
+                    loginBackground.style.backgroundImage = `url(${settings.loginBackgroundImage})`;
+                    loginBackground.style.backgroundSize = 'cover';
+                    loginBackground.style.backgroundPosition = 'center';
+                    loginBackground.style.backgroundRepeat = 'no-repeat';
+                    loginBackground.style.display = 'block';
+                    console.log('✅ Foto personalizada de portada cargada:', settings.loginBackgroundImage);
+                }
+                // También aplicar como variable CSS
                 document.documentElement.style.setProperty('--login-bg-image', `url(${settings.loginBackgroundImage})`);
             }
+        } else {
+            console.log('ℹ️ No hay foto personalizada configurada');
         }
     } catch (error) {
-        console.error('Error cargando configuración de fondo de login:', error);
+        console.error('❌ Error cargando configuración de fondo de login:', error);
     }
 }
 
