@@ -77,8 +77,8 @@
                 
                 <div id="settingsPanel" class="settings-panel" style="display: none;">
                     <div class="version-info">
-                        <span class="version-badge">v1.7</span>
-                        <span class="version-text">Última actualización: Instrucciones bloqueadas VISIBLES + Estilos mejorados</span>
+                        <span class="version-badge">v1.8</span>
+                        <span class="version-text">Última actualización: Modal galería + Instrucciones en modal + Fotos ampliadas</span>
                     </div>
                     
                     <h3>Fondo Personalizado</h3>
@@ -164,6 +164,28 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
     
+    <!-- Modal de detalles del mes -->
+    <div id="monthModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Detalles del Mes</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="modal-instructions">
+                    <h3>📋 Instrucciones para la aventura:</h3>
+                    <p id="modalInstructions">Las instrucciones aparecerán aquí...</p>
+                </div>
+                <div class="modal-gallery">
+                    <h3>📸 Fotos de recuerdo:</h3>
+                    <div id="modalPhotos" class="photo-gallery-grid">
+                        <!-- Las fotos se cargarán aquí -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- App Scripts -->
     <script src="firebase-config.js"></script>
     <script src="app.js"></script>

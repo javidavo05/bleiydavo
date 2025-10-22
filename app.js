@@ -282,10 +282,62 @@ async function createMonthCard(monthData, now) {
     // Agregar evento para ver detalles
     const viewBtn = card.querySelector('.btn-view');
     if (viewBtn) {
-        viewBtn.addEventListener('click', () => showMonthDetails(monthData.id, monthContent));
+        viewBtn.addEventListener('click', () => showMonthModal(monthData.id, monthContent, monthData.month, monthData.year));
     }
 
     return card;
+}
+
+function showMonthModal(monthId, monthContent, monthName, year) {
+    const modal = document.getElementById('monthModal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalInstructions = document.getElementById('modalInstructions');
+    const modalPhotos = document.getElementById('modalPhotos');
+    
+    // Configurar título
+    modalTitle.textContent = `${monthName} ${year}`;
+    
+    // Configurar instrucciones
+    modalInstructions.textContent = monthContent.instructions || 'Las instrucciones aparecerán aquí...';
+    
+    // Configurar galería de fotos
+    modalPhotos.innerHTML = '';
+    if (monthContent.photos && monthContent.photos.length > 0) {
+        monthContent.photos.forEach(photo => {
+            const photoItem = document.createElement('div');
+            photoItem.className = 'photo-gallery-item';
+            photoItem.innerHTML = `<img src="${photo}" alt="Foto de recuerdo">`;
+            modalPhotos.appendChild(photoItem);
+        });
+    } else {
+        // Mostrar placeholders si no hay fotos
+        for (let i = 0; i < 6; i++) {
+            const placeholder = document.createElement('div');
+            placeholder.className = 'photo-placeholder';
+            placeholder.textContent = ['📸', '📷', '🖼️', '✨', '💫', '🌟'][i];
+            modalPhotos.appendChild(placeholder);
+        }
+    }
+    
+    // Mostrar modal
+    modal.classList.add('show');
+    
+    // Event listeners para cerrar modal
+    const closeBtn = modal.querySelector('.close');
+    closeBtn.onclick = () => modal.classList.remove('show');
+    
+    modal.onclick = (e) => {
+        if (e.target === modal) {
+            modal.classList.remove('show');
+        }
+    };
+    
+    // Cerrar con ESC
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && modal.classList.contains('show')) {
+            modal.classList.remove('show');
+        }
+    });
 }
 
 function showMonthDetails(monthId, monthContent) {
