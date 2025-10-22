@@ -61,10 +61,7 @@ function init() {
     document.getElementById('monthsBtn').addEventListener('click', () => showAdminSection('months'));
     document.getElementById('settingsBtn').addEventListener('click', () => showAdminSection('settings'));
 
-    // Background settings
-    document.getElementById('backgroundUpload').addEventListener('change', handleBackgroundUpload);
-    document.getElementById('removeBackground').addEventListener('click', removeBackground);
-    document.getElementById('useCustomBg').addEventListener('change', toggleCustomBackground);
+    // Solo foto de portada
 
     // Login background settings
     document.getElementById('loginBackgroundUpload').addEventListener('change', handleLoginBackgroundUpload);
@@ -503,8 +500,7 @@ function loadAdminPanel() {
         loadMonthEditor(TIMELINE_MONTHS[0].id);
     }
 
-    // Cargar configuración de fondo
-    loadBackgroundSettings();
+    // Cargar configuración de foto de portada
     loadLoginBackgroundSettings();
     loadTextSettings();
 }
@@ -633,6 +629,14 @@ async function loadLoginBackgroundSettings() {
         if (settingsDoc.exists) {
             const settings = settingsDoc.data();
             if (settings.loginBackgroundImage) {
+                // Aplicar como fondo único del body
+                document.body.style.backgroundImage = `url(${settings.loginBackgroundImage})`;
+                document.body.style.backgroundSize = 'cover';
+                document.body.style.backgroundPosition = 'center';
+                document.body.style.backgroundRepeat = 'no-repeat';
+                document.body.style.backgroundAttachment = 'fixed';
+                
+                // También aplicar al elemento loginBackground si existe
                 const loginBackground = document.getElementById('loginBackground');
                 if (loginBackground) {
                     loginBackground.style.backgroundImage = `url(${settings.loginBackgroundImage})`;
@@ -640,10 +644,9 @@ async function loadLoginBackgroundSettings() {
                     loginBackground.style.backgroundPosition = 'center';
                     loginBackground.style.backgroundRepeat = 'no-repeat';
                     loginBackground.style.display = 'block';
-                    console.log('✅ Foto personalizada de portada cargada:', settings.loginBackgroundImage);
                 }
-                // También aplicar como variable CSS
-                document.documentElement.style.setProperty('--login-bg-image', `url(${settings.loginBackgroundImage})`);
+                
+                console.log('✅ Foto personalizada de portada aplicada como fondo único:', settings.loginBackgroundImage);
             }
         } else {
             console.log('ℹ️ No hay foto personalizada configurada');
@@ -675,10 +678,14 @@ async function handleLoginBackgroundUpload(e) {
             updatedAt: firebase.firestore.FieldValue.serverTimestamp()
         }, { merge: true });
 
-        // Aplicar inmediatamente
-        document.documentElement.style.setProperty('--login-bg-image', `url(${downloadUrl})`);
+        // Aplicar inmediatamente como fondo único del body
+        document.body.style.backgroundImage = `url(${downloadUrl})`;
+        document.body.style.backgroundSize = 'cover';
+        document.body.style.backgroundPosition = 'center';
+        document.body.style.backgroundRepeat = 'no-repeat';
+        document.body.style.backgroundAttachment = 'fixed';
 
-        showMessage('Imagen de fondo de login actualizada correctamente', 'success');
+        showMessage('Foto de portada actualizada correctamente', 'success');
         
     } catch (error) {
         console.error('Error subiendo imagen de fondo de login:', error);
@@ -694,10 +701,15 @@ async function removeLoginBackground() {
             updatedAt: firebase.firestore.FieldValue.serverTimestamp()
         });
 
-        document.documentElement.style.removeProperty('--login-bg-image');
+        // Remover imagen del body
+        document.body.style.backgroundImage = '';
+        document.body.style.backgroundSize = '';
+        document.body.style.backgroundPosition = '';
+        document.body.style.backgroundRepeat = '';
+        document.body.style.backgroundAttachment = '';
         document.getElementById('loginBackgroundUpload').value = '';
 
-        showMessage('Fondo de login eliminado', 'success');
+        showMessage('Foto de portada eliminada', 'success');
         
     } catch (error) {
         console.error('Error eliminando fondo de login:', error);
