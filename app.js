@@ -235,12 +235,20 @@ async function createMonthCard(monthData, now) {
     card.className = `month-card ${isUnlocked ? 'unlocked' : 'locked'}`;
     
     // Obtener datos del mes desde Firestore
+    console.log('🔍 Cargando datos del mes:', monthData.id);
+    console.log('🔍 Usuario autenticado:', auth.currentUser);
+    console.log('🔍 Email del usuario:', auth.currentUser?.email);
+    
     const monthDoc = await db.collection('months').doc(monthData.id).get();
+    console.log('🔍 Documento encontrado:', monthDoc.exists);
+    
     const monthContent = monthDoc.exists ? monthDoc.data() : {
         title: '',
         instructions: '',
         photos: []
     };
+    
+    console.log('🔍 Contenido del mes:', monthContent);
 
             card.innerHTML = `
                 <div class="month-header">
@@ -294,6 +302,10 @@ async function createMonthCard(monthData, now) {
 }
 
 function showMonthModal(monthId, monthContent, monthName, year) {
+    console.log('🔍 Abriendo modal para:', monthId, monthContent, monthName, year);
+    console.log('🔍 Usuario actual:', auth.currentUser);
+    console.log('🔍 Rol actual:', currentUserRole);
+    
     const modal = document.getElementById('monthModal');
     const modalTitle = document.getElementById('modalTitle');
     const modalPhotos = document.getElementById('modalPhotos');
