@@ -301,12 +301,12 @@ function showMonthModal(monthId, monthContent, monthName, year) {
     // Configurar título
     modalTitle.textContent = `${monthName} ${year}`;
     
-    // Configurar campos de detalles con datos de ejemplo para visualización
-    document.getElementById('modalAdventureTitle').textContent = monthContent.adventureTitle || 'Cena Romántica bajo las Estrellas';
-    document.getElementById('modalClothingType').textContent = monthContent.clothingType || 'Vestido elegante y zapatos cómodos para caminar';
-    document.getElementById('modalLocation').textContent = monthContent.location || 'Restaurante "La Terraza del Amor" - Centro Histórico';
-    document.getElementById('modalPickupTime').textContent = monthContent.pickupTime || '7:30 PM en tu casa';
-    document.getElementById('modalObservations').textContent = monthContent.observations || 'Trae tu sonrisa más bonita y prepárate para una noche mágica llena de sorpresas y momentos inolvidables';
+    // Configurar campos de detalles
+    document.getElementById('modalAdventureTitle').textContent = monthContent.adventureTitle || 'Aventura especial del mes';
+    document.getElementById('modalClothingType').textContent = monthContent.clothingType || 'Vestimenta cómoda y elegante';
+    document.getElementById('modalLocation').textContent = monthContent.location || 'Lugar especial por confirmar';
+    document.getElementById('modalPickupTime').textContent = monthContent.pickupTime || 'Hora por confirmar';
+    document.getElementById('modalObservations').textContent = monthContent.observations || 'Detalles especiales para esta aventura';
     
     // Configurar galería de fotos
     modalPhotos.innerHTML = '';
