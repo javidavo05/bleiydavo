@@ -342,10 +342,24 @@ function showMonthModal(monthId, monthContent, monthName, year) {
     // Mostrar modal
     modal.classList.add('show');
     
-    // Limpiar event listeners anteriores
+    // Limpiar TODOS los event listeners anteriores
     const closeBtn = modal.querySelector('.close');
-    closeBtn.onclick = null;
-    modal.onclick = null;
+    const allCloseBtns = modal.querySelectorAll('.close');
+    const allModals = document.querySelectorAll('.modal');
+    
+    // Limpiar todos los event listeners
+    allCloseBtns.forEach(btn => {
+        btn.onclick = null;
+        btn.removeEventListener('click', () => {});
+    });
+    
+    allModals.forEach(m => {
+        m.onclick = null;
+        m.removeEventListener('click', () => {});
+    });
+    
+    // Remover todos los event listeners de keydown
+    document.removeEventListener('keydown', () => {});
     
     // Event listeners para cerrar modal
     closeBtn.onclick = () => {
