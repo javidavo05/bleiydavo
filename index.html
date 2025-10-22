@@ -77,8 +77,8 @@
                 
                 <div id="settingsPanel" class="settings-panel" style="display: none;">
                     <div class="version-info">
-                        <span class="version-badge">v2.8</span>
-                        <span class="version-text">Última actualización: Galería expandible en clusters</span>
+                        <span class="version-badge">v2.9</span>
+                        <span class="version-text">Última actualización: Modal de ampliación de fotos con navegación</span>
                     </div>
                     
                     <h3>Fondo Personalizado</h3>
@@ -202,6 +202,26 @@
                     <h3>📸 Fotos de recuerdo:</h3>
                     <div id="modalPhotos" class="photo-gallery-grid">
                         <!-- Las fotos se cargarán aquí -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de ampliación de fotos -->
+    <div id="photoModal" class="modal">
+        <div class="modal-content photo-modal-content">
+            <div class="modal-header">
+                <h2 id="photoModalTitle">Foto Ampliada</h2>
+                <span class="close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="photo-container">
+                    <img id="photoModalImage" src="" alt="Foto ampliada" class="photo-full-size">
+                    <div class="photo-navigation">
+                        <button id="prevPhoto" class="nav-btn">‹ Anterior</button>
+                        <span id="photoCounter">1 de 1</span>
+                        <button id="nextPhoto" class="nav-btn">Siguiente ›</button>
                     </div>
                 </div>
             </div>

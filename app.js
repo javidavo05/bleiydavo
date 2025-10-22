@@ -254,9 +254,9 @@ async function createMonthCard(monthData, now) {
                             <div class="memories-section">
                                 <h5>📸 Fotos de recuerdo:</h5>
                                 <div class="photo-album preview" id="album-${monthData.id}">
-                                    ${monthContent.photos.slice(0, 3).map(photo => `
+                                    ${monthContent.photos.slice(0, 3).map((photo, index) => `
                                         <div class="photo-slot">
-                                            <img src="${photo}" alt="Foto de recuerdo">
+                                            <img src="${photo}" alt="Foto de recuerdo" onclick="openPhotoModal(${index}, ${JSON.stringify(monthContent.photos).replace(/"/g, '&quot;')}, '${monthData.month} ${monthData.year}')">
                                         </div>
                                     `).join('')}
                                     ${monthContent.photos.length > 3 ? `
@@ -308,10 +308,10 @@ function showMonthModal(monthId, monthContent, monthName, year) {
     // Configurar galería de fotos
     modalPhotos.innerHTML = '';
     if (monthContent.photos && monthContent.photos.length > 0) {
-        monthContent.photos.forEach(photo => {
+        monthContent.photos.forEach((photo, index) => {
             const photoItem = document.createElement('div');
             photoItem.className = 'photo-gallery-item';
-            photoItem.innerHTML = `<img src="${photo}" alt="Foto de recuerdo">`;
+            photoItem.innerHTML = `<img src="${photo}" alt="Foto de recuerdo" onclick="openPhotoModal(${index}, ${JSON.stringify(monthContent.photos).replace(/"/g, '&quot;')}, '${monthName} ${year}')">`;
             modalPhotos.appendChild(photoItem);
         });
     } else {
@@ -809,15 +809,106 @@ function expandGallery(monthId, allPhotos) {
         album.classList.remove('preview');
         album.classList.add('expanded');
         album.innerHTML = `
-            ${allPhotos.map(photo => `
+            ${allPhotos.map((photo, index) => `
                 <div class="photo-slot">
-                    <img src="${photo}" alt="Foto de recuerdo">
+                    <img src="${photo}" alt="Foto de recuerdo" onclick="openPhotoModal(${index}, ${JSON.stringify(allPhotos).replace(/"/g, '&quot;')}, '${monthId}')">
                 </div>
             `).join('')}
             <button class="expand-gallery-btn" onclick="expandGallery('${monthId}', ${JSON.stringify(allPhotos).replace(/"/g, '&quot;')})">
                 Ver menos
             </button>
         `;
+    }
+}
+
+// Variables globales para el modal de fotos
+let currentPhotoIndex = 0;
+let currentPhotos = [];
+
+// Función para abrir el modal de fotos
+function openPhotoModal(photoIndex, photos, monthName) {
+    currentPhotos = photos;
+    currentPhotoIndex = photoIndex;
+    
+    const modal = document.getElementById('photoModal');
+    const modalImage = document.getElementById('photoModalImage');
+    const modalTitle = document.getElementById('photoModalTitle');
+    const photoCounter = document.getElementById('photoCounter');
+    
+    // Configurar imagen
+    modalImage.src = photos[photoIndex];
+    modalTitle.textContent = `${monthName} - Foto ${photoIndex + 1}`;
+    photoCounter.textContent = `${photoIndex + 1} de ${photos.length}`;
+    
+    // Mostrar modal
+    modal.classList.add('show');
+    
+    // Event listeners para cerrar modal
+    const closeBtn = modal.querySelector('.close');
+    closeBtn.onclick = () => modal.classList.remove('show');
+    
+    modal.onclick = (e) => {
+        if (e.target === modal) {
+            modal.classList.remove('show');
+        }
+    };
+    
+    // Cerrar con ESC
+    const handleEsc = (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('show')) {
+            modal.classList.remove('show');
+            document.removeEventListener('keydown', handleEsc);
+        }
+    };
+    document.addEventListener('keydown', handleEsc);
+    
+    // Event listeners para navegación
+    document.getElementById('prevPhoto').onclick = () => navigatePhoto(-1);
+    document.getElementById('nextPhoto').onclick = () => navigatePhoto(1);
+    
+    // Navegación con teclado
+    const handleKeyNav = (e) => {
+        if (modal.classList.contains('show')) {
+            if (e.key === 'ArrowLeft') navigatePhoto(-1);
+            if (e.key === 'ArrowRight') navigatePhoto(1);
+        }
+    };
+    document.addEventListener('keydown', handleKeyNav);
+}
+
+// Función para navegar entre fotos
+function navigatePhoto(direction) {
+    currentPhotoIndex += direction;
+    
+    // Verificar límites
+    if (currentPhotoIndex < 0) currentPhotoIndex = currentPhotos.length - 1;
+    if (currentPhotoIndex >= currentPhotos.length) currentPhotoIndex = 0;
+    
+    // Actualizar imagen y contador
+    const modalImage = document.getElementById('photoModalImage');
+    const photoCounter = document.getElementById('photoCounter');
+    const modalTitle = document.getElementById('photoModalTitle');
+    
+    modalImage.src = currentPhotos[currentPhotoIndex];
+    photoCounter.textContent = `${currentPhotoIndex + 1} de ${currentPhotos.length}`;
+    modalTitle.textContent = `Foto ${currentPhotoIndex + 1}`;
+    
+    // Actualizar estado de botones
+    updateNavigationButtons();
+}
+
+// Función para actualizar botones de navegación
+function updateNavigationButtons() {
+    const prevBtn = document.getElementById('prevPhoto');
+    const nextBtn = document.getElementById('nextPhoto');
+    
+    // Solo deshabilitar si hay una foto
+    if (currentPhotos.length <= 1) {
+        prevBtn.disabled = true;
+        nextBtn.disabled = true;
+    } else {
+        prevBtn.disabled = false;
+        nextBtn.disabled = false;
     }
 }
 
