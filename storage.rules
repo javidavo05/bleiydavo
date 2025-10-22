@@ -1,0 +1,40 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    // Función para verificar si el usuario es admin
+    function isAdmin() {
+      return request.auth != null && 
+             request.auth.token.email == 'jvallejo@timeline.com';
+    }
+    
+    // Función para verificar si el usuario está autenticado
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // Reglas para las fotos
+    match /photos/{allPaths=**} {
+      // Los usuarios autenticados pueden leer
+      allow read: if isAuthenticated();
+      
+      // Solo el admin puede escribir y eliminar
+      allow write, delete: if isAdmin();
+    }
+    
+    // Reglas para las imágenes de fondo
+    match /backgrounds/{allPaths=**} {
+      // Los usuarios autenticados pueden leer
+      allow read: if isAuthenticated();
+      
+      // Solo el admin puede escribir y eliminar
+      allow write, delete: if isAdmin();
+    }
+    
+    // Denegar acceso a cualquier otra ubicación no especificada
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}
+

@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía Visual - Timeline Especial</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            color: #f1f5f9;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #1e293b;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+        
+        h1 {
+            background: linear-gradient(135deg, #6366f1, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        h2 {
+            color: #ec4899;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 2rem;
+            border-bottom: 2px solid #475569;
+            padding-bottom: 10px;
+        }
+        
+        h3 {
+            color: #8b5cf6;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899);
+            border-radius: 15px;
+            margin-bottom: 40px;
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            color: white;
+            margin-top: 20px;
+        }
+        
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .step {
+            background: #334155;
+            padding: 25px;
+            border-radius: 15px;
+            border: 2px solid #475569;
+            transition: all 0.3s ease;
+        }
+        
+        .step:hover {
+            border-color: #6366f1;
+            transform: translateY(-5px);
+        }
+        
+        .step-number {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .users {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .user-card {
+            background: #334155;
+            padding: 30px;
+            border-radius: 15px;
+            border: 3px solid;
+        }
+        
+        .user-card.admin {
+            border-color: #6366f1;
+        }
+        
+        .user-card.viewer {
+            border-color: #ec4899;
+        }
+        
+        .user-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        
+        .credentials {
+            background: #1e293b;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            border-left: 4px solid #6366f1;
+        }
+        
+        .timeline-preview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 30px 0;
+        }
+        
+        .month-box {
+            background: #334155;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid #475569;
+        }
+        
+        .month-box .day {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #6366f1, #ec4899);
+            border-radius: 50%;
+            line-height: 50px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 30px 0;
+        }
+        
+        .feature {
+            background: #334155;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .cta {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 40px;
+        }
+        
+        .cta h2 {
+            color: white;
+            border: none;
+            margin: 0 0 20px 0;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: white;
+            color: #6366f1;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: bold;
+            margin: 10px;
+            transition: transform 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+        }
+        
+        .checklist {
+            background: #334155;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+        
+        .checklist ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .checklist li {
+            padding: 15px;
+            margin: 10px 0;
+            background: #1e293b;
+            border-radius: 8px;
+            border-left: 4px solid #10b981;
+        }
+        
+        .checklist li::before {
+            content: "☐ ";
+            font-size: 1.5rem;
+            margin-right: 10px;
+            color: #10b981;
+        }
+        
+        .warning {
+            background: rgba(239, 68, 68, 0.2);
+            border: 2px solid #ef4444;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .success {
+            background: rgba(16, 185, 129, 0.2);
+            border: 2px solid #10b981;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        code {
+            background: #1e293b;
+            padding: 2px 8px;
+            border-radius: 4px;
+            color: #ec4899;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .file-structure {
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <h1>🎉 Timeline Especial</h1>
+            <p>Una experiencia interactiva que se desbloquea mes a mes</p>
+            <p style="font-size: 1rem; margin-top: 10px;">Agosto 2025 - Agosto 2026</p>
+        </div>
+
+        <h2>🎯 ¿Qué es esto?</h2>
+        <p style="font-size: 1.2rem; margin: 20px 0;">
+            Un sitio web especial con una timeline de 13 meses. Cada mes se desbloquea automáticamente 
+            el día <strong>23 a las 00:00 horas</strong> revelando fotos, títulos e instrucciones especiales.
+        </p>
+
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">🔒</div>
+                <h4>Desbloqueo Automático</h4>
+                <p>Cada mes se abre el día 23</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">📸</div>
+                <h4>Galería de Fotos</h4>
+                <p>Múltiples fotos por mes</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">👥</div>
+                <h4>Dos Usuarios</h4>
+                <p>Admin y Visor</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">⚙️</div>
+                <h4>Panel Admin</h4>
+                <p>Gestión completa</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🎨</div>
+                <h4>Diseño Moderno</h4>
+                <p>Responsive y elegante</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">☁️</div>
+                <h4>Firebase Cloud</h4>
+                <p>Todo en la nube</p>
+            </div>
+        </div>
+
+        <h2>👥 Usuarios del Sistema</h2>
+        
+        <div class="users">
+            <div class="user-card admin">
+                <div class="user-icon">👨‍💼</div>
+                <h3>Administrador</h3>
+                <div class="credentials">
+                    <strong>Usuario:</strong> jvallejo<br>
+                    <strong>Email:</strong> jvallejo@timeline.com<br>
+                    <strong>Rol:</strong> Admin
+                </div>
+                <h4>Permisos:</h4>
+                <ul>
+                    <li>✅ Ve todos los meses siempre</li>
+                    <li>✅ Accede al Panel Admin</li>
+                    <li>✅ Edita títulos e instrucciones</li>
+                    <li>✅ Sube y elimina fotos</li>
+                    <li>✅ Prepara contenido futuro</li>
+                </ul>
+            </div>
+
+            <div class="user-card viewer">
+                <div class="user-icon">👁️</div>
+                <h3>Visor</h3>
+                <div class="credentials">
+                    <strong>Usuario:</strong> bvega<br>
+                    <strong>Email:</strong> bvega@timeline.com<br>
+                    <strong>Rol:</strong> Viewer
+                </div>
+                <h4>Permisos:</h4>
+                <ul>
+                    <li>✅ Ve meses desbloqueados</li>
+                    <li>✅ Ve fotos e instrucciones</li>
+                    <li>✅ Ve contenido histórico</li>
+                    <li>❌ No puede editar</li>
+                    <li>❌ No ve meses bloqueados</li>
+                </ul>
+            </div>
+        </div>
+
+        <h2>📅 Timeline - 13 Meses</h2>
+        
+        <div class="timeline-preview">
+            <div class="month-box">
+                <strong>Agosto</strong><br>2025
+                <div class="day">23</div>
+            </div>
+            <div class="month-box">
+                <strong>Septiembre</strong><br>2025
+                <div class="day">23</div>
+            </div>
+            <div class="month-box">
+                <strong>Octubre</strong><br>2025
+                <div class="day">23</div>
+            </div>
+            <div class="month-box">
+                <strong>Noviembre</strong><br>2025
+                <div class="day">23</div>
+            </div>
+            <div class="month-box">
+                <strong>Diciembre</strong><br>2025
+                <div class="day">23</div>
+            </div>
+            <div class="month-box">
+                <strong>Enero</strong><br>2026
+                <div class="day">23</div>
+            </div>
+            <div class="month-box">
+                <strong>Febrero</strong><br>2026
+                <div class="day">23</div>
+            </div>
+            <div class="month-box">
+                <strong>Marzo</strong><br>2026
+                <div class="day">23</div>
+            </div>
+            <div class="month-box">
+                <strong>Abril</strong><br>2026
+                <div class="day">23</div>
+            </div>
+            <div class="month-box">
+                <strong>Mayo</strong><br>2026
+                <div class="day">23</div>
+            </div>
+            <div class="month-box">
+                <strong>Junio</strong><br>2026
+                <div class="day">23</div>
+            </div>
+            <div class="month-box">
+                <strong>Julio</strong><br>2026
+                <div class="day">23</div>
+            </div>
+            <div class="month-box">
+                <strong>Agosto</strong><br>2026
+                <div class="day">23</div>
+            </div>
+        </div>
+
+        <h2>🚀 Configuración Rápida (5 minutos)</h2>
+        
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Credenciales</h3>
+                <p>Obtén tus credenciales de Firebase Console y edita <code>firebase-config.js</code></p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Authentication</h3>
+                <p>Activa Email/Password y crea los dos usuarios</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Firestore</h3>
+                <p>Crea la base de datos y publica <code>firestore.rules</code></p>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <h3>Storage</h3>
+                <p>Activa Storage y publica <code>storage.rules</code></p>
+            </div>
+            <div class="step">
+                <div class="step-number">5</div>
+                <h3>Imagen</h3>
+                <p>Agrega tu foto en <code>assets/login-image.jpg</code> (opcional)</p>
+            </div>
+            <div class="step">
+                <div class="step-number">6</div>
+                <h3>¡Listo!</h3>
+                <p>Abre <code>index.html</code> en tu navegador</p>
+            </div>
+        </div>
+
+        <div class="warning">
+            <strong>⚠️ IMPORTANTE:</strong> Debes editar <code>firebase-config.js</code> con tus credenciales reales 
+            de Firebase antes de que funcione. Reemplaza todos los valores que dicen <code>"TU_..."</code>
+        </div>
+
+        <h2>✅ Checklist de Configuración</h2>
+        
+        <div class="checklist">
+            <ul>
+                <li>Editar <code>firebase-config.js</code> con credenciales reales</li>
+                <li>Crear usuarios en Firebase Authentication</li>
+                <li>Publicar reglas de Firestore</li>
+                <li>Publicar reglas de Storage</li>
+                <li>Agregar imagen de login (opcional)</li>
+                <li>Abrir <code>index.html</code> y probar login</li>
+                <li>Login como jvallejo y preparar contenido</li>
+                <li>Probar como bvega</li>
+            </ul>
+        </div>
+
+        <h2>📁 Archivos del Proyecto</h2>
+        
+        <div class="file-structure">
+<strong>Archivos principales:</strong>
+├── index.html              → Página principal
+├── app.js                  → Lógica de la aplicación
+├── styles.css              → Diseño y estilos
+├── firebase-config.js      → Configuración Firebase ⚠️ EDITAR
+│
+<strong>Configuración:</strong>
+├── firestore.rules         → Reglas Firestore (copiar a console)
+├── storage.rules           → Reglas Storage (copiar a console)
+├── firebase.json           → Config de hosting
+│
+<strong>Documentación:</strong>
+├── LEEME_PRIMERO.txt       → Inicio rápido en texto
+├── INICIO_RAPIDO.md        → Guía de 5 minutos
+├── INSTRUCCIONES_CONFIGURACION.md → Paso a paso detallado
+├── README.md               → Documentación completa
+├── RESUMEN_PROYECTO.md     → Visión general
+├── CHEATSHEET.md           → Referencia rápida
+└── GUIA_VISUAL.html        → Esta página
+        </div>
+
+        <h2>🎯 Primeros Pasos Después de Configurar</h2>
+        
+        <div class="steps">
+            <div class="step">
+                <h4>1. Login como Admin</h4>
+                <p>Usuario: <code>jvallejo</code></p>
+            </div>
+            <div class="step">
+                <h4>2. Panel Admin</h4>
+                <p>Haz clic en "Panel Admin"</p>
+            </div>
+            <div class="step">
+                <h4>3. Selecciona un Mes</h4>
+                <p>Ejemplo: Agosto 2025</p>
+            </div>
+            <div class="step">
+                <h4>4. Agrega Contenido</h4>
+                <p>Título, instrucciones y fotos</p>
+            </div>
+            <div class="step">
+                <h4>5. Guarda</h4>
+                <p>Haz clic en "Guardar Cambios"</p>
+            </div>
+            <div class="step">
+                <h4>6. Prueba como Visor</h4>
+                <p>Cierra sesión y login como <code>bvega</code></p>
+            </div>
+        </div>
+
+        <div class="success">
+            <strong>✨ ¡Todo está listo!</strong> El proyecto está 100% configurado. Solo necesitas agregar 
+            tus credenciales de Firebase y crear los usuarios. Luego podrás empezar a agregar contenido.
+        </div>
+
+        <h2>📚 ¿Qué Documentación Leer?</h2>
+        
+        <div class="steps">
+            <div class="step">
+                <h4>Si tienes 5 minutos</h4>
+                <p>Lee <code>INICIO_RAPIDO.md</code></p>
+            </div>
+            <div class="step">
+                <h4>Si quieres paso a paso</h4>
+                <p>Lee <code>INSTRUCCIONES_CONFIGURACION.md</code></p>
+            </div>
+            <div class="step">
+                <h4>Si quieres entender todo</h4>
+                <p>Lee <code>README.md</code> y <code>RESUMEN_PROYECTO.md</code></p>
+            </div>
+            <div class="step">
+                <h4>Si necesitas referencia</h4>
+                <p>Usa <code>CHEATSHEET.md</code></p>
+            </div>
+        </div>
+
+        <div class="cta">
+            <h2>🎉 ¡Empieza Ahora!</h2>
+            <p style="color: white; margin-bottom: 20px;">Elige tu próximo paso:</p>
+            <a href="INICIO_RAPIDO.md" class="cta-button">📖 Guía Rápida (5 min)</a>
+            <a href="INSTRUCCIONES_CONFIGURACION.md" class="cta-button">📋 Paso a Paso</a>
+            <a href="index.html" class="cta-button">🚀 Abrir App</a>
+        </div>
+
+        <p style="text-align: center; margin-top: 40px; color: #cbd5e1;">
+            Creado con ❤️ para una experiencia especial
+        </p>
+    </div>
+</body>
+</html>
+

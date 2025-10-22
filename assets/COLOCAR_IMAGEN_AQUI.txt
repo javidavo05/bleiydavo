@@ -1,0 +1,22 @@
+📸 INSTRUCCIONES PARA LA IMAGEN DE LOGIN
+
+Por favor, coloca una imagen en esta carpeta con el nombre:
+
+    login-image.jpg
+
+Esta imagen aparecerá en la pantalla de inicio de sesión.
+
+Formatos soportados: .jpg, .jpeg, .png, .webp
+
+Tamaño recomendado: 800x400 píxeles (o similar)
+
+Sugerencias de imagen:
+- Una foto especial de ambos
+- Un paisaje bonito
+- Algo que tenga significado para ustedes
+- Cualquier imagen que quieras que vean al entrar
+
+Si no tienes una imagen ahora, el sitio funcionará de todas formas y mostrará un gradiente de colores como placeholder.
+
+Para cambiar la imagen más tarde, simplemente reemplaza el archivo login-image.jpg en esta carpeta.
+

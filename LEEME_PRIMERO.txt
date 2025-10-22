@@ -1,0 +1,189 @@
+╔══════════════════════════════════════════════════════════════════════╗
+║                                                                      ║
+║            🎉 BIENVENIDO A TU TIMELINE ESPECIAL 🎉                  ║
+║                                                                      ║
+╚══════════════════════════════════════════════════════════════════════╝
+
+📝 ¿QUÉ ES ESTO?
+
+Un sitio web interactivo con una timeline de 13 meses (Agosto 2025 - Agosto 2026).
+Cada mes se desbloquea automáticamente el día 23 a las 00:00 horas.
+
+═══════════════════════════════════════════════════════════════════════
+
+🚀 EMPEZAR AHORA (5 MINUTOS)
+
+1. Lee: INICIO_RAPIDO.md
+2. Configura tus credenciales de Firebase
+3. Crea los usuarios
+4. ¡Listo!
+
+═══════════════════════════════════════════════════════════════════════
+
+📚 DOCUMENTACIÓN
+
+├─ 🚀 INICIO_RAPIDO.md
+│  └─ Guía rápida para configurar en 5 minutos
+│
+├─ 📋 INSTRUCCIONES_CONFIGURACION.md
+│  └─ Guía paso a paso detallada con capturas
+│
+├─ 📖 README.md
+│  └─ Documentación completa del proyecto
+│
+├─ 📊 RESUMEN_PROYECTO.md
+│  └─ Visión general: estructura, usuarios, tecnologías
+│
+└─ ⚡ CHEATSHEET.md
+   └─ Referencia rápida: comandos, tips, soluciones
+
+═══════════════════════════════════════════════════════════════════════
+
+👥 USUARIOS
+
+┌─────────────────────────────────────────────┐
+│ ADMINISTRADOR (jvallejo)                    │
+├─────────────────────────────────────────────┤
+│ Usuario: jvallejo                           │
+│ Email: jvallejo@timeline.com                │
+│ ✅ Ve todo                                  │
+│ ✅ Edita contenido                          │
+│ ✅ Sube fotos                               │
+│ ✅ Panel de administración                  │
+└─────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────┐
+│ VISOR (bvega)                               │
+├─────────────────────────────────────────────┤
+│ Usuario: bvega                              │
+│ Email: bvega@timeline.com                   │
+│ ✅ Ve meses desbloqueados                   │
+│ ✅ Ve fotos e instrucciones                 │
+│ ❌ No puede editar                          │
+│ ❌ No ve meses bloqueados                   │
+└─────────────────────────────────────────────┘
+
+═══════════════════════════════════════════════════════════════════════
+
+📅 TIMELINE
+
+Agosto 2025      ► Día 23, 00:00 hs
+Septiembre 2025  ► Día 23, 00:00 hs
+Octubre 2025     ► Día 23, 00:00 hs
+Noviembre 2025   ► Día 23, 00:00 hs
+Diciembre 2025   ► Día 23, 00:00 hs
+Enero 2026       ► Día 23, 00:00 hs
+Febrero 2026     ► Día 23, 00:00 hs
+Marzo 2026       ► Día 23, 00:00 hs
+Abril 2026       ► Día 23, 00:00 hs
+Mayo 2026        ► Día 23, 00:00 hs
+Junio 2026       ► Día 23, 00:00 hs
+Julio 2026       ► Día 23, 00:00 hs
+Agosto 2026      ► Día 23, 00:00 hs
+
+═══════════════════════════════════════════════════════════════════════
+
+✅ CHECKLIST RÁPIDO
+
+ANTES DE USAR:
+[ ] Editar firebase-config.js con credenciales reales
+[ ] Crear usuarios en Firebase Authentication
+[ ] Publicar reglas de Firestore (firestore.rules)
+[ ] Publicar reglas de Storage (storage.rules)
+[ ] (Opcional) Cambiar imagen de login
+
+DESPUÉS:
+[ ] Abrir index.html en navegador
+[ ] Login como jvallejo
+[ ] Ir a Panel Admin
+[ ] Preparar contenido para cada mes
+[ ] Probar como bvega
+
+PARA PUBLICAR:
+[ ] firebase deploy
+[ ] Compartir URL con quien quieras
+
+═══════════════════════════════════════════════════════════════════════
+
+📁 ARCHIVOS PRINCIPALES
+
+index.html          ► Página principal
+app.js              ► Lógica de la aplicación
+styles.css          ► Estilos y diseño
+firebase-config.js  ► Configuración Firebase ⚠️ EDITAR PRIMERO
+
+firestore.rules     ► Reglas de seguridad Firestore
+storage.rules       ► Reglas de seguridad Storage
+
+assets/
+└─ login-image.svg  ► Imagen de pantalla de login
+
+═══════════════════════════════════════════════════════════════════════
+
+🎯 PRIMEROS PASOS
+
+1. Abre: INICIO_RAPIDO.md
+2. Sigue los 6 pasos (5 minutos)
+3. Abre index.html en tu navegador
+4. ¡Disfruta!
+
+═══════════════════════════════════════════════════════════════════════
+
+🆘 ¿PROBLEMAS?
+
+► No puedo iniciar sesión
+  → Verifica que creaste los usuarios en Firebase Authentication
+  → Email exacto: jvallejo@timeline.com y bvega@timeline.com
+
+► Página en blanco
+  → Abre consola (F12) y revisa errores
+  → Verifica firebase-config.js
+
+► No se suben fotos
+  → Verifica Storage rules publicadas
+  → Inicia sesión como jvallejo (admin)
+
+► Los datos no se guardan
+  → Verifica Firestore rules publicadas
+  → Revisa consola (F12) para errores
+
+═══════════════════════════════════════════════════════════════════════
+
+🌟 CARACTERÍSTICAS
+
+✨ Diseño moderno y responsive
+✨ Timeline interactiva
+✨ Desbloqueo automático por fecha
+✨ Galería de fotos por mes
+✨ Panel de administración completo
+✨ Sistema de roles (admin/visor)
+✨ Subida múltiple de fotos
+✨ Todo guardado en Firebase Cloud
+✨ Sin necesidad de servidor propio
+✨ Accesible desde cualquier dispositivo
+
+═══════════════════════════════════════════════════════════════════════
+
+💡 TIPS
+
+• Prepara todo el contenido con anticipación
+• Optimiza las fotos antes de subir (< 1MB)
+• Usa saltos de línea en las instrucciones
+• Prueba como ambos usuarios antes de compartir
+• Mantén backup de las fotos importantes
+
+═══════════════════════════════════════════════════════════════════════
+
+🎉 ¡TODO ESTÁ LISTO!
+
+El proyecto está 100% configurado y listo para usar.
+Solo necesitas agregar tus credenciales de Firebase.
+
+👉 EMPIEZA AQUÍ: INICIO_RAPIDO.md
+
+═══════════════════════════════════════════════════════════════════════
+
+Creado con ❤️ para una experiencia especial
+
+╚══════════════════════════════════════════════════════════════════════╝
+
