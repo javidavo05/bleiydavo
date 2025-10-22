@@ -60,6 +60,11 @@ function init() {
 
     // Debug upload
     document.getElementById('testUpload').addEventListener('click', testImageUpload);
+    
+    // Event listeners para preview
+    document.getElementById('previewTimeline').addEventListener('click', () => previewTimeline('normal'));
+    document.getElementById('previewLocked').addEventListener('click', () => previewTimeline('locked'));
+    document.getElementById('previewUnlocked').addEventListener('click', () => previewTimeline('unlocked'));
 
     // Inicializar datos en Firestore si no existen
     initializeFirestoreData();
@@ -222,63 +227,30 @@ async function createMonthCard(monthData, now) {
         photos: []
     };
 
-    card.innerHTML = `
-        <div class="month-header">
-            <h3>${monthData.month} ${monthData.year}</h3>
-            <div class="day-badge">23</div>
-        </div>
-        <div class="month-content">
-            ${isUnlocked ? `
-                <div class="adventure-section">
-                    <h4 class="adventure-title">${monthContent.title || 'Aventura del mes'}</h4>
-                    <div class="adventure-instructions">
-                        <h5>📋 Instrucciones para la aventura:</h5>
-                        <p>${monthContent.instructions || 'Las instrucciones aparecerán aquí cuando el admin las configure...'}</p>
-                    </div>
+            card.innerHTML = `
+                <div class="month-header">
+                    <h3>${monthData.month} ${monthData.year}</h3>
+                    <div class="day-badge">23</div>
                 </div>
-                <div class="memories-section">
-                    <h5>📸 Fotos de recuerdo:</h5>
-                    <div class="photo-album">
-                        ${monthContent.photos && monthContent.photos.length > 0 
-                            ? monthContent.photos.map(photo => `
-                                <div class="photo-slot">
-                                    <img src="${photo}" alt="Foto de recuerdo">
-                                </div>
-                            `).join('')
-                            : `
-                                <div class="photo-slot">📸</div>
-                                <div class="photo-slot">📷</div>
-                                <div class="photo-slot">🖼️</div>
-                                <div class="photo-slot">✨</div>
-                                <div class="photo-slot">💫</div>
-                                <div class="photo-slot">🌟</div>
-                            `
-                        }
-                    </div>
-                </div>
-            ` : `
-                <div class="locked-adventure">
-                    <div class="locked-instructions">
-                        <div class="lock-icon">🔒</div>
-                        <h4 class="locked-title">Espera a este 23</h4>
-                        <p class="locked-message">para vivir la siguiente aventura</p>
-                    </div>
-                    <div class="locked-photos">
-                        <h5>📸 Fotos de recuerdo:</h5>
-                        <div class="photo-album locked">
-                            <div class="photo-slot">🔒</div>
-                            <div class="photo-slot">💕</div>
-                            <div class="photo-slot">🌹</div>
-                            <div class="photo-slot">✨</div>
-                            <div class="photo-slot">💫</div>
-                            <div class="photo-slot">🌟</div>
+                <div class="month-content">
+                    ${isUnlocked ? `
+                        <div class="adventure-status">
+                            <div class="status-icon">✅</div>
+                            <h4 class="status-title">Aventura Disponible</h4>
+                            <p class="status-message">Haz clic en "Ver Detalles" para descubrir la aventura</p>
                         </div>
-                    </div>
+                    ` : `
+                        <div class="locked-adventure">
+                            <div class="locked-instructions">
+                                <div class="lock-icon">🔒</div>
+                                <h4 class="locked-title">Espera a este 23</h4>
+                                <p class="locked-message">para vivir la siguiente aventura</p>
+                            </div>
+                        </div>
+                    `}
                 </div>
-            `}
-        </div>
-        ${isUnlocked || isAdmin ? `<button class="btn-view" data-month-id="${monthData.id}">Ver Detalles</button>` : ''}
-    `;
+                ${isUnlocked || isAdmin ? `<button class="btn-view" data-month-id="${monthData.id}">Ver Detalles</button>` : ''}
+            `;
 
     // Agregar evento para ver detalles
     const viewBtn = card.querySelector('.btn-view');
@@ -675,6 +647,39 @@ function showDebugInfo(message, type = 'info') {
     debugInfo.textContent += message;
     debugInfo.className = `debug-info show ${type}`;
     debugInfo.scrollTop = debugInfo.scrollHeight;
+}
+
+// Función para preview del timeline
+async function previewTimeline(mode) {
+    const now = new Date();
+    const timelineContainer = document.getElementById('timeline');
+    
+    // Limpiar timeline actual
+    timelineContainer.innerHTML = '';
+    
+    for (const monthData of TIMELINE_MONTHS) {
+        let shouldShow = true;
+        
+        if (mode === 'locked') {
+            shouldShow = now < monthData.unlockDate;
+        } else if (mode === 'unlocked') {
+            shouldShow = now >= monthData.unlockDate;
+        }
+        
+        if (shouldShow) {
+            const card = await createMonthCard(monthData, now);
+            timelineContainer.appendChild(card);
+        }
+    }
+    
+    // Reinicializar animaciones
+    initScrollAnimations();
+    
+    // Mostrar mensaje de preview
+    const message = mode === 'locked' ? '🔒 Mostrando solo meses bloqueados' : 
+                   mode === 'unlocked' ? '✅ Mostrando solo meses desbloqueados' : 
+                   '👁️ Mostrando timeline normal';
+    showMessage(message, 'info');
 }
 
 async function loadMonthEditor(monthId) {
