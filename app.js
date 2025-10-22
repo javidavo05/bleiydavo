@@ -342,43 +342,43 @@ function showMonthModal(monthId, monthContent, monthName, year) {
     // Mostrar modal
     modal.classList.add('show');
     
-    // Limpiar TODOS los event listeners anteriores
-    const closeBtn = modal.querySelector('.close');
-    const allCloseBtns = modal.querySelectorAll('.close');
-    const allModals = document.querySelectorAll('.modal');
-    
-    // Limpiar todos los event listeners
-    allCloseBtns.forEach(btn => {
-        btn.onclick = null;
-        btn.removeEventListener('click', () => {});
-    });
-    
-    allModals.forEach(m => {
-        m.onclick = null;
-        m.removeEventListener('click', () => {});
-    });
-    
-    // Remover todos los event listeners de keydown
-    document.removeEventListener('keydown', () => {});
-    
-    // Event listeners para cerrar modal
-    closeBtn.onclick = () => {
+    // Función para cerrar modal
+    const closeModal = () => {
         modal.classList.remove('show');
-    };
-    
-    modal.onclick = (e) => {
-        if (e.target === modal) {
-            modal.classList.remove('show');
+        // Limpiar event listeners después de cerrar
+        document.removeEventListener('keydown', handleEsc);
+        modal.removeEventListener('click', handleModalClick);
+        const closeBtn = modal.querySelector('.close');
+        if (closeBtn) {
+            closeBtn.removeEventListener('click', closeModal);
         }
     };
     
-    // Cerrar con ESC
+    // Función para manejar click en modal
+    const handleModalClick = (e) => {
+        if (e.target === modal) {
+            closeModal();
+        }
+    };
+    
+    // Función para manejar ESC
     const handleEsc = (e) => {
         if (e.key === 'Escape' && modal.classList.contains('show')) {
-            modal.classList.remove('show');
-            document.removeEventListener('keydown', handleEsc);
+            closeModal();
         }
     };
+    
+    // Limpiar event listeners anteriores
+    const closeBtn = modal.querySelector('.close');
+    if (closeBtn) {
+        closeBtn.removeEventListener('click', closeModal);
+        closeBtn.addEventListener('click', closeModal);
+    }
+    
+    modal.removeEventListener('click', handleModalClick);
+    modal.addEventListener('click', handleModalClick);
+    
+    document.removeEventListener('keydown', handleEsc);
     document.addEventListener('keydown', handleEsc);
 }
 
