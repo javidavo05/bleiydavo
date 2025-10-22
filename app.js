@@ -228,36 +228,47 @@ async function createMonthCard(monthData, now) {
         </div>
         <div class="month-content">
             ${isUnlocked ? `
-                <h4 class="month-title">${monthContent.title || 'Sin título'}</h4>
-                <div class="photo-album">
-                    ${monthContent.photos && monthContent.photos.length > 0 
-                        ? monthContent.photos.map(photo => `
-                            <div class="photo-slot">
-                                <img src="${photo}" alt="Foto">
-                            </div>
-                        `).join('')
-                        : `
-                            <div class="photo-slot">📸</div>
-                            <div class="photo-slot">📷</div>
-                            <div class="photo-slot">🖼️</div>
-                            <div class="photo-slot">✨</div>
-                            <div class="photo-slot">💫</div>
-                            <div class="photo-slot">🌟</div>
-                        `
-                    }
+                <div class="adventure-section">
+                    <h4 class="adventure-title">${monthContent.title || 'Aventura por descubrir'}</h4>
+                    <div class="adventure-instructions">
+                        <h5>📋 Instrucciones para la aventura:</h5>
+                        <p>${monthContent.instructions || 'Las instrucciones aparecerán aquí...'}</p>
+                    </div>
+                </div>
+                <div class="memories-section">
+                    <h5>📸 Fotos de recuerdo:</h5>
+                    <div class="photo-album">
+                        ${monthContent.photos && monthContent.photos.length > 0 
+                            ? monthContent.photos.map(photo => `
+                                <div class="photo-slot">
+                                    <img src="${photo}" alt="Foto de recuerdo">
+                                </div>
+                            `).join('')
+                            : `
+                                <div class="photo-slot">📸</div>
+                                <div class="photo-slot">📷</div>
+                                <div class="photo-slot">🖼️</div>
+                                <div class="photo-slot">✨</div>
+                                <div class="photo-slot">💫</div>
+                                <div class="photo-slot">🌟</div>
+                            `
+                        }
+                    </div>
                 </div>
             ` : `
-                <div class="photo-album locked">
-                    <div class="photo-slot">🔒</div>
-                    <div class="photo-slot">💕</div>
-                    <div class="photo-slot">🌹</div>
-                    <div class="photo-slot">✨</div>
-                    <div class="photo-slot">💫</div>
-                    <div class="photo-slot">🌟</div>
-                </div>
-                <div class="locked-message">
-                    <h4>Espera al próximo 23</h4>
-                    <p>para la siguiente aventura</p>
+                <div class="locked-adventure">
+                    <div class="photo-album locked">
+                        <div class="photo-slot">🔒</div>
+                        <div class="photo-slot">💕</div>
+                        <div class="photo-slot">🌹</div>
+                        <div class="photo-slot">✨</div>
+                        <div class="photo-slot">💫</div>
+                        <div class="photo-slot">🌟</div>
+                    </div>
+                    <div class="locked-message">
+                        <h4>Espera al próximo 23</h4>
+                        <p>para la siguiente aventura</p>
+                    </div>
                 </div>
             `}
         </div>
