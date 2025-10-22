@@ -244,6 +244,9 @@ async function createMonthCard(monthData, now) {
     const isPast = now >= monthData.unlockDate;
     const isAdmin = currentUserRole === 'admin';
     
+    // Los viewers pueden ver todos los meses, pero solo los desbloqueados muestran contenido
+    const canView = isAdmin || isUnlocked;
+    
     const card = document.createElement('div');
     card.className = `month-card ${isUnlocked ? 'unlocked' : 'locked'}`;
     
@@ -302,13 +305,30 @@ async function createMonthCard(monthData, now) {
                         </div>
                     `}
                 </div>
-                ${isUnlocked || isAdmin ? `<button class="btn-view" data-month-id="${monthData.id}">Ver Detalles</button>` : ''}
+                ${canView ? `<button class="btn-view" data-month-id="${monthData.id}">Ver Detalles</button>` : ''}
             `;
 
     // Agregar evento para ver detalles
     const viewBtn = card.querySelector('.btn-view');
     if (viewBtn) {
-        viewBtn.addEventListener('click', () => showMonthModal(monthData.id, monthContent, monthData.month, monthData.year));
+        viewBtn.addEventListener('click', () => {
+            // Los viewers pueden ver todos los meses, pero el contenido varía según el estado
+            if (isAdmin || isUnlocked) {
+                showMonthModal(monthData.id, monthContent, monthData.month, monthData.year);
+            } else {
+                // Para meses bloqueados, mostrar modal con mensaje de espera
+                showMonthModal(monthData.id, {
+                    title: '',
+                    instructions: '',
+                    photos: [],
+                    adventureTitle: '',
+                    clothingType: '',
+                    location: '',
+                    pickupTime: '',
+                    observations: ''
+                }, monthData.month, monthData.year);
+            }
+        });
     }
 
     return card;
@@ -326,16 +346,31 @@ function showMonthModal(monthId, monthContent, monthName, year) {
     // Configurar título
     modalTitle.textContent = `${monthName} ${year}`;
     
+    // Verificar si el mes está desbloqueado
+    const monthInfo = TIMELINE_MONTHS.find(m => m.id === monthId);
+    const isUnlocked = new Date() >= monthInfo.unlockDate;
+    const isAdmin = currentUserRole === 'admin';
+    
     // Configurar campos de detalles
-    document.getElementById('modalAdventureTitle').textContent = monthContent.adventureTitle || 'Aventura especial del mes';
-    document.getElementById('modalClothingType').textContent = monthContent.clothingType || 'Vestimenta cómoda y elegante';
-    document.getElementById('modalLocation').textContent = monthContent.location || 'Lugar especial por confirmar';
-    document.getElementById('modalPickupTime').textContent = monthContent.pickupTime || 'Hora por confirmar';
-    document.getElementById('modalObservations').textContent = monthContent.observations || 'Detalles especiales para esta aventura';
+    if (isUnlocked || isAdmin) {
+        // Mes desbloqueado o admin - mostrar contenido real
+        document.getElementById('modalAdventureTitle').textContent = monthContent.adventureTitle || 'Aventura especial del mes';
+        document.getElementById('modalClothingType').textContent = monthContent.clothingType || 'Vestimenta cómoda y elegante';
+        document.getElementById('modalLocation').textContent = monthContent.location || 'Lugar especial por confirmar';
+        document.getElementById('modalPickupTime').textContent = monthContent.pickupTime || 'Hora por confirmar';
+        document.getElementById('modalObservations').textContent = monthContent.observations || 'Detalles especiales para esta aventura';
+    } else {
+        // Mes bloqueado - mostrar mensaje de espera
+        document.getElementById('modalAdventureTitle').textContent = '🔒 Aventura Bloqueada';
+        document.getElementById('modalClothingType').textContent = 'Se revelará el día 23';
+        document.getElementById('modalLocation').textContent = 'Lugar por confirmar';
+        document.getElementById('modalPickupTime').textContent = 'Hora por confirmar';
+        document.getElementById('modalObservations').textContent = 'Espera a este 23 para vivir la siguiente aventura';
+    }
     
     // Configurar galería de fotos
     modalPhotos.innerHTML = '';
-    if (monthContent.photos && monthContent.photos.length > 0) {
+    if ((isUnlocked || isAdmin) && monthContent.photos && monthContent.photos.length > 0) {
         monthContent.photos.forEach((photo, index) => {
             const photoItem = document.createElement('div');
             photoItem.className = 'photo-gallery-item';
