@@ -809,6 +809,80 @@ body.custom-bg {
     }
 }
 
+/* Placeholder romántico para fotos */
+.placeholder-message {
+    text-align: center;
+    padding: 40px 20px;
+    background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(51, 65, 85, 0.6));
+    border-radius: 20px;
+    border: 2px solid rgba(251, 191, 36, 0.3);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+.placeholder-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.placeholder-icon {
+    font-size: 3rem;
+    animation: heartbeat 2s ease-in-out infinite;
+}
+
+.placeholder-content h4 {
+    color: #fbbf24;
+    font-size: 1.5rem;
+    font-family: 'Great Vibes', 'Dancing Script', cursive;
+    margin: 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.placeholder-content p {
+    color: #e2e8f0;
+    font-size: 1.1rem;
+    margin: 0;
+    font-style: italic;
+    opacity: 0.8;
+}
+
+.placeholder-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.placeholder-item {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(245, 158, 11, 0.3));
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    border: 2px solid rgba(251, 191, 36, 0.4);
+    transition: all 0.3s ease;
+    animation: float 3s ease-in-out infinite;
+}
+
+.placeholder-item:nth-child(odd) {
+    animation-delay: 0.2s;
+}
+
+.placeholder-item:nth-child(even) {
+    animation-delay: 0.4s;
+}
+
+.placeholder-item:hover {
+    transform: scale(1.1);
+    background: linear-gradient(135deg, rgba(251, 191, 36, 0.4), rgba(245, 158, 11, 0.5));
+    border-color: rgba(251, 191, 36, 0.6);
+}
+
 .photo-album:hover {
     transform: rotate(0deg) scale(1.02);
     box-shadow: 0 12px 40px rgba(0, 0, 0, 0.2);

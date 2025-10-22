@@ -297,12 +297,12 @@ function showMonthModal(monthId, monthContent, monthName, year) {
     // Configurar título
     modalTitle.textContent = `${monthName} ${year}`;
     
-    // Configurar campos de detalles
-    document.getElementById('modalAdventureTitle').textContent = monthContent.adventureTitle || 'Aventura especial del mes';
-    document.getElementById('modalClothingType').textContent = monthContent.clothingType || 'Vestimenta cómoda y elegante';
-    document.getElementById('modalLocation').textContent = monthContent.location || 'Lugar especial por confirmar';
-    document.getElementById('modalPickupTime').textContent = monthContent.pickupTime || 'Hora por confirmar';
-    document.getElementById('modalObservations').textContent = monthContent.observations || 'Detalles especiales para esta aventura';
+    // Configurar campos de detalles con datos de ejemplo para visualización
+    document.getElementById('modalAdventureTitle').textContent = monthContent.adventureTitle || 'Cena Romántica bajo las Estrellas';
+    document.getElementById('modalClothingType').textContent = monthContent.clothingType || 'Vestido elegante y zapatos cómodos para caminar';
+    document.getElementById('modalLocation').textContent = monthContent.location || 'Restaurante "La Terraza del Amor" - Centro Histórico';
+    document.getElementById('modalPickupTime').textContent = monthContent.pickupTime || '7:30 PM en tu casa';
+    document.getElementById('modalObservations').textContent = monthContent.observations || 'Trae tu sonrisa más bonita y prepárate para una noche mágica llena de sorpresas y momentos inolvidables';
     
     // Configurar galería de fotos
     modalPhotos.innerHTML = '';
@@ -314,13 +314,25 @@ function showMonthModal(monthId, monthContent, monthName, year) {
             modalPhotos.appendChild(photoItem);
         });
     } else {
-        // Mostrar placeholders si no hay fotos
-        for (let i = 0; i < 6; i++) {
-            const placeholder = document.createElement('div');
-            placeholder.className = 'photo-placeholder';
-            placeholder.textContent = ['📸', '📷', '🖼️', '✨', '💫', '🌟'][i];
-            modalPhotos.appendChild(placeholder);
-        }
+        // Mostrar placeholders con mensaje romántico si no hay fotos
+        const placeholderMessage = document.createElement('div');
+        placeholderMessage.className = 'placeholder-message';
+        placeholderMessage.innerHTML = `
+            <div class="placeholder-content">
+                <div class="placeholder-icon">💕</div>
+                <h4>Fotos de Recuerdo</h4>
+                <p>Las fotos de esta aventura aparecerán aquí cuando el admin las suba</p>
+                <div class="placeholder-grid">
+                    <div class="placeholder-item">📸</div>
+                    <div class="placeholder-item">📷</div>
+                    <div class="placeholder-item">🖼️</div>
+                    <div class="placeholder-item">✨</div>
+                    <div class="placeholder-item">💫</div>
+                    <div class="placeholder-item">🌟</div>
+                </div>
+            </div>
+        `;
+        modalPhotos.appendChild(placeholderMessage);
     }
     
     // Mostrar modal
