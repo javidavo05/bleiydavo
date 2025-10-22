@@ -84,6 +84,9 @@ function init() {
     // Inicializar datos en Firestore si no existen
     initializeFirestoreData();
     
+    // Cargar textos personalizados
+    loadTextSettings();
+    
     // Inicializar animaciones de scroll
     initScrollAnimations();
 }
@@ -217,6 +220,9 @@ function showScreen(screenId) {
 
 // Timeline
 async function loadTimeline() {
+    // Cargar textos personalizados antes de crear los cards
+    await loadTextSettings();
+    
     timeline.innerHTML = '';
     const now = new Date();
 
@@ -259,8 +265,8 @@ async function createMonthCard(monthData, now) {
                     ${isUnlocked ? `
                         <div class="adventure-status">
                             <div class="status-icon">✅</div>
-                            <h4 class="status-title">${cardTexts.openTitle}</h4>
-                            <p class="status-message">${cardTexts.openMessage}</p>
+                            <h4 class="status-title">${cardTexts.openTitle || 'Aventura Disponible'}</h4>
+                            <p class="status-message">${cardTexts.openMessage || 'Haz clic en "Ver Detalles" para descubrir la aventura'}</p>
                         </div>
                         ${monthContent.photos && monthContent.photos.length > 0 ? `
                             <div class="memories-section">
@@ -283,8 +289,8 @@ async function createMonthCard(monthData, now) {
                         <div class="locked-adventure">
                             <div class="locked-instructions">
                                 <div class="lock-icon">🔒</div>
-                                <h4 class="locked-title">${cardTexts.closedTitle}</h4>
-                                <p class="locked-message">${cardTexts.closedMessage}</p>
+                                <h4 class="locked-title">${cardTexts.closedTitle || 'Espera a este 23'}</h4>
+                                <p class="locked-message">${cardTexts.closedMessage || 'para vivir la siguiente aventura'}</p>
                             </div>
                         </div>
                     `}
